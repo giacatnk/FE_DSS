@@ -1,0 +1,25 @@
+.nav-header-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #e9d8f4;
+}
+
+.nav-header-element {
+    float: left;
+}
+
+.nav-header-element .nav-header-link {
+    display: block;  
+    color: black;  
+    text-align: center;  
+    padding: 14px 16px;  
+    text-decoration: none;
+}
+
+.nav-header-element .nav-header-link:hover {  
+    color: white;   
+    background-color: #b367b0;  
+    font-weight: bold;
+}
