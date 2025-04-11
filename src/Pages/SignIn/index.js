@@ -30,13 +30,13 @@ const SignIn = (props) => {
         dispatch(LogIn(data));
     }
     if (isLoggedIn) {
-        navigate('/projects');
+        navigate('/patients');
     } else return <Layout>
         <Content style={contentStyle}>
             <div style={{ position: 'relative', width: '65%' }}>
                 <div style={{ position: 'absolute', display: 'flex', alignItems: 'center', top: '20px', left: '-40px' }}>
                     <img src={Logo} alt="Logo" style={{ width: '35px', marginRight: '10px' }} />
-                    <h1> Desicion Support System </h1>
+                    <h1> Intelligent System </h1>
                 </div>
                 <img src={SignInScreen} alt="Sign In SVG" style={{ width: '100%' }} />
             </div>
@@ -46,7 +46,7 @@ const SignIn = (props) => {
                 justifyContent: 'flex-end',
                 alignItems: 'space-between',
             }}>
-                <h1 style={{ fontSize: '30px', margin: '35px 0px' }}> Welcome to DSS! </h1>
+                <h1 style={{ fontSize: '30px', margin: '35px 0px' }}> Welcome to Aceso! </h1>
                 <Form layout='vertical' autoComplete="off" requiredMark={false} form={form} onFinish={onSignIn}>
                     <Form.Item name="username"
                         rules={[

@@ -10,7 +10,7 @@ const Home = (props) => {
     } else if (isLoggedIn === false) {
         return <Navigate to='/signin' />
     } else {
-        return <Navigate to='/loans' />
+        return <Navigate to='/patients' />
     }
 }
 

@@ -12,13 +12,13 @@ const AuthenticationAPI = {
     Login: async (username, password) => {
         try {
             sleep(1000);
-            if (username === 'admin' && password === 'dss123') {
-                localStorage.setItem('dssUserID', '123456');
-                localStorage.setItem('dssUsername', 'admin');
+            if (username === 'admin' && password === 'aceso123') {
+                localStorage.setItem('userID', '123456');
+                localStorage.setItem('username', 'admin');
                 return {
                     user: {
-                        userID: localStorage.getItem('dssUserID'),
-                        username: localStorage.getItem('dssUsername')
+                        userID: localStorage.getItem('userID'),
+                        username: localStorage.getItem('username')
                     }
                 }
             } else {
@@ -33,8 +33,8 @@ const AuthenticationAPI = {
 
     Logout: async () => {
         try {
-            localStorage.removeItem('dssUserID');
-            localStorage.removeItem('dssUsername');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('username');
         } catch (err) {
             console.error(err);
             throw err;
@@ -43,12 +43,12 @@ const AuthenticationAPI = {
 
     GetCurrentUser: async () => {
         try {
-            if (localStorage.getItem('dssUsername') === null) {
+            if (localStorage.getItem('username') === null) {
                 throw Error("Haven't authenticated yet");
             } else return {
                 user: {
-                    username: localStorage.getItem('dssUsername'),
-                    userID: localStorage.getItem('dssUserID')
+                    username: localStorage.getItem('username'),
+                    userID: localStorage.getItem('userID')
                 }
             }
         } catch (err) {

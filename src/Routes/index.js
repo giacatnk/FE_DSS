@@ -5,8 +5,8 @@ import AsyncRoute from './asyncRoute';
 import ProtectedRoute from './protectedRoutes';
 
 import SignIn from "../Pages/SignIn";
-import Loan from '../Pages/Loan';
 import Home from '../Pages/Home';
+import Patient from '../Pages/Patient';
 
 const router = createBrowserRouter([
     {
@@ -18,8 +18,8 @@ const router = createBrowserRouter([
         element: <ProtectedRoute authenticate={false} component={<SignIn />}/>
     },
     {
-        path: '/loans',
-        element: <ProtectedRoute component={<Loan />}/>
+        path: '/patients',
+        element: <ProtectedRoute component={<Patient />}/>
     }
 ]);
 
