@@ -4,6 +4,7 @@ import Header from '../../Layouts/Header';
 import { Link } from 'react-router-dom';
 import PatientAPI from '../../API/Services/Patient';
 import AddPatientDrawer from './AddPatientDrawer';
+import ViewPatientModal from './ViewPatientModal';
 
 const { Content, Footer } = Layout;
 const contentStyle = {
@@ -53,7 +54,7 @@ const Patient = (props) => {
             title: 'Actions', key: 'actions',
             render: (_, record) => {
                 return <Space size="middle">
-                    <Button>View Details</Button>
+                    <ViewPatientModal patient_id={record.id} />
                     <Button >Edit</Button>
                     <Button type='primary' danger>Delete</Button>
                 </Space>

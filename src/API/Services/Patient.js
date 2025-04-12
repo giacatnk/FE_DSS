@@ -16,6 +16,40 @@ const PatientAPI = {
         //     }
         // );
     },
+    get_by_id: (id) => {
+        return Promise.resolve({
+            data: { patient: patients.find((patient) => patient.id === id) },
+        })
+        // return instance.get(
+        //     `/v1/patients/${id}`,
+        // );
+    },
+    delete_by_id: (id) => {
+        return Promise.resolve({
+            data: { message: "Deleted successfully" },
+        })
+        // return instance.delete(
+        //     `/v1/patients/${id}`,
+        // );
+    },
+    update_by_id: (id, data) => {
+        return Promise.resolve({
+            data: { message: "Updated successfully" },
+        })
+        // return instance.put(
+        //     `/v1/patients/${id}`,
+        //     data
+        // );
+    },
+    create: (data) => {
+        return Promise.resolve({
+            data: { message: "Created successfully" },
+        })
+        // return instance.post(
+        //     `/v1/patients`,
+        //     data
+        // );
+    },
 }
 
 export default PatientAPI;

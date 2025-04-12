@@ -1,18 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { MinusCircleOutlined, FireOutlined, PlusCircleFilled, PlusOutlined, ImportOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Drawer, Form, Input, message, Row, Select, Space, Switch, Table } from 'antd';
-const { Option } = Select;
+import { MinusCircleOutlined, PlusCircleFilled, PlusOutlined, ImportOutlined } from '@ant-design/icons';
+import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
+
+
+const criteria_metadata = [
+    { name: "age", label: "Age", type: "integer" },
+    { name: "weight", label: "Weight", type: "float" },
+    { name: "gender", label: "Gender", type: "select", values: [{ value: "male", label: "Male" }, { value: "female", label: "Female" }] },
+    { name: "platelets", label: "Platelets", type: "float" },
+    { name: "spo2", label: "SpO2", type: "float" },
+    { name: "creatinine", label: "Creatinine", type: "float" },
+    { name: "hematocrit", label: "Hematocrit", type: "float" },
+    { name: "aids", label: "AIDS", type: "boolean" },
+    { name: "limphoma", label: "Lymphoma", type: "boolean" },
+    { name: "solid_tumor_with_metastasis", label: "Solid Tumor with Metastasis", type: "boolean" },
+    { name: "heart_rate", label: "Heart Rate", type: "float" },
+    { name: "calcium", label: "Calcium", type: "float" },
+    { name: "wbc", label: "WBC", type: "float" },
+    { name: "glucose", label: "Glucose", type: "float" },
+    { name: "inr", label: "INR", type: "float" },
+    { name: "potassium", label: "Potassium", type: "float" },
+    { name: "sodium", label: "Sodium", type: "float" },
+    { name: "ethicity", label: "Ethicity", type: "select", values: [{ value: "white", label: "White" }, { value: "black", label: "Black" }, { value: "hispanic", label: "Hispanic" }, { value: "asian", label: "Asian" }] },
+]
 
 const AddPatientDrawer = (props) => {
     const [open, setOpen] = useState(false);
-
     const [confirmLoading, setConfirmLoading] = useState(false);
-    const [validateLoading, setValidateLoading] = useState(false);
-
-    const [validateErrors, setValidateErrors] = useState([]);
-
     const [form] = Form.useForm()
-
 
     const showDrawer = () => {
         setOpen(true);
@@ -23,13 +38,11 @@ const AddPatientDrawer = (props) => {
     };
 
     const onSubmitForm = () => {
-        // Add API Create Patient
+        // TODO: Add API Create Patient
         console.log("Form submitted");
         console.log(form.getFieldsValue());
-        setConfirmLoading(false);
-        
     }
-    
+
     return (
         <>
             <Space style={{ float: 'right' }}>
@@ -47,8 +60,13 @@ const AddPatientDrawer = (props) => {
                 extra={
                     <Space>
                         <Button className='custom-ghost-button' onClick={onClose}>Cancel</Button>
-                        <Button className='custom-button' onClick={() => { form.submit() }} type="primary" htmlType='submit'
-                            loading={confirmLoading}>
+                        <Button 
+                            className='custom-button' 
+                            onClick={() => { form.submit() }} 
+                            type="primary"
+                            htmlType='submit'
+                            loading={confirmLoading}
+                        >
                             Submit
                         </Button>
                     </Space>
@@ -57,7 +75,7 @@ const AddPatientDrawer = (props) => {
                 <Form layout="vertical" form={form} autoComplete='off' onFinish={onSubmitForm}>
                     <Row gutter={16}>
                         <Col span={12}>
-                            <Form.Item  
+                            <Form.Item
                                 name="name" label="Name"
                                 rules={[
                                     {
@@ -77,64 +95,63 @@ const AddPatientDrawer = (props) => {
                                 name="date_of_birth" label="Date of Birth"
                                 rules={[{ required: true, message: "Please fill patient's date of birth" }]}
                             >
-                                <DatePicker style={{ width: '100%' }} placeholder="Select date of birth" /> 
+                                <DatePicker style={{ width: '100%' }} placeholder="Select date of birth" />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
-                            <Form.Item colon={false} name="criterias">
-                                <Form.List name="criterias">
-                                    {(fields, { add, remove }) => (
-                                        <>
-                                            {fields.map(({ key, name, ...restField }) => (
-                                                <div key={key}>
-                                                    <Row gutter={32}>
-                                                        <Col span={24}> Criteria {key + 1} </Col>
-                                                        <Col span={11}>
-                                                            <Form.Item colon={false} {...restField} name={[name, 'name']}
-                                                                rules={[
-                                                                    {
-                                                                        required: true,
-                                                                        message: 'Please fill criteria name',
-                                                                    },
-                                                                ]}
-                                                            >
-                                                                <Select 
-                                                                    placeholder="Name" 
-                                                                    options={
-                                                                        [
-                                                                            { value: 'fever', label: 'Fever' },
-                                                                            { value: 'cough', label: 'Cough' },
-                                                                            { value: 'headache', label: 'Headache' },
-                                                                            { value: 'nausea', label: 'Nausea' },
-                                                                            { value: 'diarrhea', label: 'Diarrhea' },
-                                                                            { value: 'fatigue', label: 'Fatigue' },
-                                                                            { value: 'muscle pain', label: 'Muscle pain' },
-                                                                            { value: 'sore throat', label: 'Sore throat' },
-                                                                        ]
-                                                                    }
-                                                                />
-                                                            </Form.Item>
-                                                        </Col>
-                                                        <Col span={11}>
-                                                            <Form.Item colon={false} {...restField} name={[name, 'value']}>
-                                                                <Input placeholder="Value" />
-                                                            </Form.Item>
-                                                        </Col>
-                                                        <Col span={2}>
-                                                            <MinusCircleOutlined onClick={() => remove(name)} />
-                                                        </Col>
-                                                    </Row>
-                                                </div>
-                                            ))}
-                                            <Form.Item colon={false}>
-                                                <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                                                    Add a criteria
-                                                </Button>
-                                            </Form.Item>
-                                        </>
-                                    )}
-                                </Form.List>
-                            </Form.Item>
+                            <Form.List name="criterias">
+                                {(fields, { add, remove }) => (
+                                    <>
+                                        {fields.map(({ key, name, ...restField }) => (
+                                            <div key={key}>
+                                                <Row gutter={32}>
+                                                    <Col span={24}> Criteria {key + 1} </Col>
+                                                    <Col span={11}>
+                                                        <Form.Item colon={false} {...restField} name={[name, 'name']}
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: 'Please fill criteria name',
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Select
+                                                                placeholder="Name"
+                                                                options={
+                                                                    criteria_metadata.map((item) => ({
+                                                                        value: item.name,
+                                                                        label: item.label,
+                                                                    }))
+                                                                }
+                                                            />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col span={11}>
+                                                        <Form.Item colon={false} {...restField} name={[name, 'value']}
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: 'Please fill criteria value',
+                                                                },
+                                                            ]}
+                                                        >
+                                                            <Input placeholder="Value" />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col span={2}>
+                                                        <MinusCircleOutlined onClick={() => remove(name)} />
+                                                    </Col>
+                                                </Row>
+                                            </div>
+                                        ))}
+                                        <Form.Item colon={false}>
+                                            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                                Add a criteria
+                                            </Button>
+                                        </Form.Item>
+                                    </>
+                                )}
+                            </Form.List>
                         </Col>
                     </Row>
                 </Form>
