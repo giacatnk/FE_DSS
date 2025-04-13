@@ -1,38 +1,37 @@
-# Build stage
-FROM python:3.9-slim as builder
-
+# Base stage with system dependencies
+FROM python:3.9-slim as base
 WORKDIR /app
-
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements
+# Dependencies stage that will be cached
+FROM base as deps
 COPY requirements.txt .
-
-# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+# Tag this stage for reuse
+FROM deps as runtime-deps
 
-# Production stage
-FROM python:3.9-slim
-
+# Final stage
+FROM python:3.9-slim as final
 WORKDIR /app
 
-# Copy installed packages from builder
-COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
+# Copy only runtime system dependencies
+RUN apt-get update && apt-get install -y \
+    libpq5 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy installed packages from the tagged deps image
+COPY --from=runtime-deps /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+COPY --from=runtime-deps /usr/local/bin /usr/local/bin
 
 # Copy application code
 COPY . .
 
-# Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV DJANGO_SETTINGS_MODULE=config.settings
 
-# Expose ports
 EXPOSE 8000
 
-# Command to run the application
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

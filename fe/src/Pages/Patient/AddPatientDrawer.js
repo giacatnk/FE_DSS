@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { MinusCircleOutlined, PlusCircleFilled, PlusOutlined, ImportOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
+import { Button, Col, DatePicker, Drawer, Form, Input, Modal, Row, Select, Space, message } from 'antd';
 
 const AddPatientDrawer = (props) => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [form] = Form.useForm();
+    const patientApi = props.api
 
     const showDrawer = () => {
         setOpen(true);
@@ -30,13 +31,37 @@ const AddPatientDrawer = (props) => {
         console.log(data);
     }
 
+    const handleImport = () => {
+        Modal.confirm({
+            title: 'Confirm Import',
+            content: 'This will import new patients from the source database. Are you sure you want to proceed?',
+            okText: 'Import',
+            cancelText: 'Cancel',
+            onOk: () => {
+                // Call the sync endpoint
+                patientApi.sync()
+                    .then(response => {
+                        message.success('Import completed successfully');
+                        // Refresh the patient list
+                        queryClient.invalidateQueries(['patients']);
+                    })
+                    .catch(error => {
+                        message.error('Import failed: ' + error.message);
+                    });
+            },
+            onCancel: () => {
+                message.info('Import cancelled');
+            }
+        });
+    };
+
     return (
         <>
             <Space style={{ float: 'right' }}>
                 <Button className='custom-button' type="primary" onClick={showDrawer} icon={<PlusCircleFilled />} style={{ marginBottom: '10px', float: 'right' }}>
                     Add
                 </Button>
-                <Button className='custom-button' type="primary" icon={<ImportOutlined />} style={{ marginBottom: '10px', float: 'right' }}>
+                <Button className='custom-button' type="primary" icon={<ImportOutlined />} onClick={handleImport} style={{ marginBottom: '10px', float: 'right' }}>
                     Import
                 </Button>
             </Space>

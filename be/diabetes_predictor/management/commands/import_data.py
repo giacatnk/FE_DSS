@@ -1,104 +1,89 @@
-import pandas as pd
-import random
-from datetime import datetime, timedelta
-import names
-from diabetes_predictor.models import Patient, Alert
 from django.core.management.base import BaseCommand
+from django.db import transaction
+import requests
+import json
+from datetime import datetime
+from urllib.parse import urlparse
+from diabetes_predictor.utils import parse_jdbc_url
+import psycopg2
 
 class Command(BaseCommand):
-    help = 'Import data from CSV and create patients with random names and admission dates'
+    help = 'Sync the first 100 patients from source database to web database'
 
     def handle(self, *args, **options):
-        # Read the CSV file
-        df = pd.read_csv('data/mock.csv')
-        
-        # Get first 1000 rows
-        df = df.head(10)
-        
-        # Generate random admission dates between 2022-01-01 and 2022-12-31
-        start_date = datetime(2022, 1, 1)
-        end_date = datetime(2022, 12, 31)
-        
-        total_rows = len(df)
-        
-        # Create a list of model versions for different time periods
-        model_versions = [
-            "20220115_143000",  # January
-            "20220420_101500",  # April
-            "20220715_164500",  # July
-            "20221025_113000",  # October
-            "20221231_094500"   # December
-        ]
-        
-        for index, row in df.iterrows():
-            # Generate random admission date
-            random_days = random.randint(0, (end_date - start_date).days)
-            admission_date = start_date + timedelta(days=random_days)
+        try:
+            # Default database and API URLs
+            source_db_url = 'jdbc:postgresql://localhost:5432/source_db'
+            api_url = 'http://localhost:8000/api/patients/'
             
-            # Generate random name
-            gender = 'M' if random.random() > 0.5 else 'F'
-            name = names.get_full_name(gender='male' if gender == 'M' else 'female')
-            
-            # Create patient
-            patient = Patient(
-                name=name,
-                admission_date=admission_date,
-                age=float(row['age']),
-                weight=float(row['weight']),
-                gender=gender,
-                platelets=float(row['platelets']),
-                spo2=float(row['spo2']),
-                creatinine=float(row['creatinine']),
-                hematocrit=float(row['hematocrit']),
-                aids=int(row['aids']),
-                lymphoma=int(row['lymphoma']),
-                solid_tumor_with_metastasis=int(row['solid_tumor_with_metastasis']),
-                heartrate=float(row['heartrate']),
-                calcium=float(row['calcium']),
-                wbc=float(row['wbc']),
-                glucose=float(row['glucose']),
-                inr=float(row['inr']),
-                potassium=float(row['potassium']),
-                sodium=float(row['sodium']),
-                ethnicity=int(row['ethnicity'])
-            )
-            patient.save()
-            
-            # Create alert for the patient
-            # Determine which model version to use based on admission date
-            model_version = None
-            for version in model_versions:
-                version_date = datetime.strptime(version[:8], "%Y%m%d")
-                if admission_date <= version_date:
-                    model_version = version
-                    break
-            if not model_version:
-                model_version = model_versions[-1]  # Use the latest version
-            
-            # Generate prediction based on the mock data
-            # We'll use the diabetes column as our ground truth
-            is_diabetes = False if random.random() < 0.5 else True
-            
-            # Add some randomness to the prediction
-            prediction = is_diabetes
-            if random.random() < 0.1:  # 10% chance of incorrect prediction
-                prediction = not prediction
-            
-            # Generate confidence score
-            confidence = random.uniform(0.6, 0.95) if prediction == is_diabetes else random.uniform(0.4, 0.8)
-            
-            # Create alert
-            alert = Alert(
-                patient=patient,
-                prediction=prediction,
-                confidence=confidence,
-                is_correct=None,  # Start with no labels
-                model_version=model_version
-            )
-            alert.save()
-            
-            # Print progress
-            if (index + 1) % 100 == 0:
-                self.stdout.write(f'Processed {index + 1} out of {total_rows} patients')
-        
-        self.stdout.write(self.style.SUCCESS(f'Successfully imported {total_rows} patients and alerts'))
+            # Connect to source database
+            conn_params = parse_jdbc_url(source_db_url)
+            source_conn = psycopg2.connect(**conn_params)
+            source_cursor = source_conn.cursor()
+
+            # Get first 100 patients from source database
+            source_cursor.execute("""
+                SELECT * FROM patients
+                ORDER BY admission_date
+                LIMIT 100
+            """)
+
+            source_patients = source_cursor.fetchall()
+            source_columns = [desc[0] for desc in source_cursor.description]
+
+            synced_patients = 0
+
+            # Sync patients using the API
+            for patient in source_patients:
+                patient_dict = dict(zip(source_columns, patient))
+                
+                # Prepare the request body
+                request_data = {
+                    'name': patient_dict['name'],
+                    'admission_date': patient_dict['admission_date'].isoformat(),
+                    'age': float(patient_dict['age']),
+                    'weight': float(patient_dict['weight']),
+                    'gender': patient_dict['gender'],
+                    'platelets': float(patient_dict['platelets']),
+                    'spo2': float(patient_dict['spo2']),
+                    'creatinine': float(patient_dict['creatinine']),
+                    'hematocrit': float(patient_dict['hematocrit']),
+                    'aids': int(patient_dict['aids']),
+                    'lymphoma': int(patient_dict['lymphoma']),
+                    'solid_tumor_with_metastasis': int(patient_dict['solid_tumor_with_metastasis']),
+                    'heartrate': float(patient_dict['heartrate']),
+                    'calcium': float(patient_dict['calcium']),
+                    'wbc': float(patient_dict['wbc']),
+                    'glucose': float(patient_dict['glucose']),
+                    'inr': float(patient_dict['inr']),
+                    'potassium': float(patient_dict['potassium']),
+                    'sodium': float(patient_dict['sodium']),
+                    'ethnicity': int(patient_dict['ethnicity'])
+                }
+
+                # Make POST request to create patient
+                response = requests.post(
+                    api_url,
+                    json=request_data,
+                    headers={'Content-Type': 'application/json'}
+                )
+
+                if response.status_code == 201:
+                    synced_patients += 1
+                else:
+                    self.stdout.write(self.style.ERROR(
+                        f"Failed to sync patient {patient_dict['name']}: {response.text}"
+                    ))
+
+            self.stdout.write(self.style.SUCCESS(
+                f'Successfully synced {synced_patients} out of 100 patients'
+            ))
+
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Error: {str(e)}'))
+            raise
+        finally:
+            if 'source_cursor' in locals():
+                source_cursor.close()
+            if 'source_conn' in locals():
+                source_conn.close()

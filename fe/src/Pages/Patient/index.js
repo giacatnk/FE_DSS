@@ -97,7 +97,7 @@ const Patient = (props) => {
             </Row>
             <div className='site-layout-content'>
                 <div className='site-content'>
-                    <AddPatientDrawer />
+                    <AddPatientDrawer api = {PatientAPI}/>
                     <Table columns={patientColumns} dataSource={patients} loading={loadingProps} />
                 </div>
             </div>

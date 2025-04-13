@@ -127,3 +127,10 @@ The ML service is expected to be running externally on port 8080 with the follow
 ## License
 
 MIT License - see LICENSE file for details
+
+
+fresh_start
+- clean the source_db
+- run the init_source_db
+- compose up all
+- run the import_data

@@ -34,6 +34,12 @@ const PatientAPI = {
             data: { message: "Created successfully" },
         })
     },
+    sync: () => {
+        // POST {{baseUrl}}/patients/sync/
+        return Promise.resolve({
+            data: { patients: patients },
+            message: "Sync completed successfully",
+        })
+    }
 }
-
 export default PatientAPI;

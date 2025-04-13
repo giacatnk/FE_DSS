@@ -2,6 +2,7 @@ import os
 import logging
 import json
 import random
+import requests
 from datetime import datetime
 from ..models import Patient, Alert
 from typing import List, Dict, Any
@@ -9,7 +10,7 @@ from typing import List, Dict, Any
 logger = logging.getLogger(__name__)
 
 # Get ML service URL from environment variable or use default
-ML_SERVICE_URL = os.getenv('ML_SERVICE_URL', 'http://localhost:8080')
+ML_SERVICE_URL = os.getenv('ML_API_URL', 'http://localhost:8080')
 
 def get_features_from_patient(patient):
     """Extract features from a patient object"""
@@ -37,7 +38,7 @@ def get_features_from_patient(patient):
 def get_training_data():
     """Get training data from patients and labeled alerts"""
     # Get patients with labeled alerts
-    alerts = Alert.objects.filter(is_correct__isnull=False)
+    alerts = Alert.objects.all()#.filter(is_correct=True)
     
     features = []
     labels = []
@@ -75,7 +76,7 @@ def retrain():
         response = requests.post(
             f'{ML_SERVICE_URL}/retrain',
             json=training_data,
-            timeout=10  # Add timeout
+            # timeout=10  # Add timeout
         )
         response.raise_for_status()
         
@@ -93,30 +94,33 @@ def retrain():
             'message': f'Unexpected error: {str(e)}'
         }
 
-def predict_batch(patient_ids: List[int]) -> Dict[str, Any]:
-    """Predict diabetes risk for a batch of patients
+def predict_batch(patient_data: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Predict diabetes risk for a batch of patients using serialized patient data
     
     Args:
-        patient_ids: List of patient IDs to predict
+        patient_data: List of serialized patient data in JSON format
         
     Returns:
-        Dict with predictions and model status
+        Dict containing predictions for each patient
+        {
+            "predictions": [
+                {
+                    "prediction": 0.0,
+                    "confidence": null
+                }
+            ],
+            "model_version": "unknown",
+            "status": "success"
+        }
     """
     try:
-        # Get patient features
-        patients = Patient.objects.filter(id__in=patient_ids)
-        features_list = []
-        
-        for patient in patients:
-            features_list.append(get_features_from_patient(patient))
-        
-        if not features_list:
-            return {'error': 'No patient features found'}
-            
+        if not patient_data:
+            return {'error': 'No patient data provided'}
+        # print('hehehe', patient_data)
         # Send batch prediction request to ML service
         response = requests.post(
             f'{ML_SERVICE_URL}/predict',
-            json={'patients': features_list},
+            json={'patients': patient_data},
             timeout=10  # Add timeout
         )
         response.raise_for_status()

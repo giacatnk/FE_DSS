@@ -1,177 +1,1236 @@
 {
-    "info": {
-        "name": "Diabetes Prediction API",
-        "description": "API endpoints for diabetes prediction system",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-        {
-            "name": "Patients",
-            "item": [
-                {
-                    "name": "Create Patient",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"name\": \"John Doe\",\n    \"admission_date\": \"2025-04-13T06:06:45+00:00\",\n    \"age\": 45.0,\n    \"weight\": 75.0,\n    \"gender\": \"M\",\n    \"platelets\": 250000.0,\n    \"spo2\": 98.0,\n    \"creatinine\": 0.9,\n    \"hematocrit\": 45.0,\n    \"aids\": 0,\n    \"lymphoma\": 0,\n    \"solid_tumor_with_metastasis\": 0,\n    \"heartrate\": 75.0,\n    \"calcium\": 2.5,\n    \"wbc\": 7.0,\n    \"glucose\": 100.0,\n    \"inr\": 1.1,\n    \"potassium\": 4.0,\n    \"sodium\": 140.0,\n    \"ethnicity\": 1\n}"
-                        },
-                        "url": "{{baseUrl}}/patients/"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "List Patients",
-                    "request": {
-                        "method": "GET",
-                        "url": "{{baseUrl}}/patients/?page=1&offset=10"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Patient",
-                    "request": {
-                        "method": "GET",
-                        "url": "{{baseUrl}}/patients/{{patientId}}/"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Update Patient (Partial)",
-                    "request": {
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"age\": 46.0,\n    \"weight\": 76.0\n}"
-                        },
-                        "url": "{{baseUrl}}/patients/{{patientId}}/"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Delete Patient (Standard)",
-                    "request": {
-                        "method": "DELETE",
-                        "url": "{{baseUrl}}/patients/{{patientId}}/"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Delete Patient by ID",
-                    "request": {
-                        "method": "DELETE",
-                        "url": "{{baseUrl}}/patients/delete_patient/?id={{patientId}}"
-                    },
-                    "response": []
-                }
-            ]
-        },
-        {
-            "name": "Alerts",
-            "item": [
-                {
-                    "name": "List Alerts",
-                    "request": {
-                        "method": "GET",
-                        "url": "{{baseUrl}}/alerts/"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Alert",
-                    "request": {
-                        "method": "GET",
-                        "url": "{{baseUrl}}/alerts/{{alertId}}/"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Label Alert",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"is_correct\": true\n}"
-                        },
-                        "url": "{{baseUrl}}/alerts/{{alertId}}/label/"
-                    },
-                    "response": []
-                }
-            ]
-        },
-        {
-            "name": "Model Operations",
-            "item": [
-                {
-                    "name": "Batch Prediction",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"patient_ids\": [1, 2, 3]\n}"
-                        },
-                        "url": "{{baseUrl}}/models/predict/"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Retrain Model",
-                    "request": {
-                        "method": "POST",
-                        "url": "{{baseUrl}}/models/retrain/"
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Model Status",
-                    "request": {
-                        "method": "GET",
-                        "url": "{{baseUrl}}/models/status/"
-                    },
-                    "response": []
-                }
-            ]
-        }
-    ],
-    "variable": [
-        {
-            "key": "baseUrl",
-            "value": "http://localhost:8000/api",
-            "type": "string"
-        },
-        {
-            "key": "patientId",
-            "value": "1",
-            "type": "string"
-        },
-        {
-            "key": "alertId",
-            "value": "1",
-            "type": "string"
-        }
-    ]
+	"info": {
+		"_postman_id": "01192ee8-5fc3-40c2-bce4-f52cda2958af",
+		"name": "Diabetes Prediction API",
+		"description": "API endpoints for diabetes prediction system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18431604"
+	},
+	"item": [
+		{
+			"name": "Patients",
+			"item": [
+				{
+					"name": "Create Patient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"admission_date\": \"2025-04-13T06:06:45+00:00\",\n    \"age\": 45.0,\n    \"weight\": 75.0,\n    \"gender\": \"M\",\n    \"platelets\": 250000.0,\n    \"spo2\": 98.0,\n    \"creatinine\": 0.9,\n    \"hematocrit\": 45.0,\n    \"aids\": 0,\n    \"lymphoma\": 0,\n    \"solid_tumor_with_metastasis\": 0,\n    \"heartrate\": 75.0,\n    \"calcium\": 2.5,\n    \"wbc\": 7.0,\n    \"glucose\": 100.0,\n    \"inr\": 1.1,\n    \"potassium\": 4.0,\n    \"sodium\": 140.0,\n    \"ethnicity\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/patients/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patients",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Patient",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"admission_date\": \"2025-04-13T06:06:45+00:00\",\n    \"age\": 45.0,\n    \"weight\": 75.0,\n    \"gender\": \"M\",\n    \"platelets\": 250000.0,\n    \"spo2\": 98.0,\n    \"creatinine\": 0.9,\n    \"hematocrit\": 45.0,\n    \"aids\": 0,\n    \"lymphoma\": 0,\n    \"solid_tumor_with_metastasis\": 0,\n    \"heartrate\": 75.0,\n    \"calcium\": 2.5,\n    \"wbc\": 7.0,\n    \"glucose\": 100.0,\n    \"inr\": 1.1,\n    \"potassium\": 4.0,\n    \"sodium\": 140.0,\n    \"ethnicity\": 1\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/patients/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patients",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:03:54 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, POST, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "589"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3951,\n    \"latest_alert\": {\n        \"id\": 1118,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:03:54.465073Z\",\n        \"patient\": 3951\n    },\n    \"name\": \"John Doe\",\n    \"admission_date\": \"2025-04-13T06:06:45Z\",\n    \"age\": 45,\n    \"weight\": 75,\n    \"gender\": \"M\",\n    \"platelets\": 250000,\n    \"spo2\": 98,\n    \"creatinine\": 0.9,\n    \"hematocrit\": 45,\n    \"aids\": 0,\n    \"lymphoma\": 0,\n    \"solid_tumor_with_metastasis\": 0,\n    \"heartrate\": 75,\n    \"calcium\": 2.5,\n    \"wbc\": 7,\n    \"glucose\": 100,\n    \"inr\": 1.1,\n    \"potassium\": 4,\n    \"sodium\": 140,\n    \"ethnicity\": 1,\n    \"created_at\": \"2025-04-13T10:03:54.432000Z\",\n    \"updated_at\": \"2025-04-13T10:03:54.432000Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Patients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/patients/?page=1&offset=1000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patients",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "offset",
+									"value": "1000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Patients",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patients/?page=1&offset=1000",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patients",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "1000"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:12:32 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, POST, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40872"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 282,\n        \"latest_alert\": {\n            \"id\": 1134,\n            \"prediction\": false,\n            \"confidence\": 0.835797331087682,\n            \"is_correct\": true,\n            \"model_version\": \"latest\",\n            \"created_at\": \"2025-04-13T10:10:55.803828Z\",\n            \"patient\": 282\n        },\n        \"name\": \"Scott Sellers\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 78,\n        \"weight\": 60.5,\n        \"gender\": \"M\",\n        \"platelets\": 216,\n        \"spo2\": 96.25,\n        \"creatinine\": 0.88,\n        \"hematocrit\": 33.94387835978835,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 84,\n        \"calcium\": 8.6,\n        \"wbc\": 5.1,\n        \"glucose\": 141.16998397159517,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 3.79099723108918,\n        \"sodium\": 136.16644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:55.779605Z\",\n        \"updated_at\": \"2025-04-13T10:10:55.779605Z\"\n    },\n    {\n        \"id\": 736,\n        \"latest_alert\": {\n            \"id\": 1132,\n            \"prediction\": true,\n            \"confidence\": 0.8965637804540328,\n            \"is_correct\": true,\n            \"model_version\": \"latest\",\n            \"created_at\": \"2025-04-13T10:10:55.750035Z\",\n            \"patient\": 736\n        },\n        \"name\": \"Roberta Lawrence\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 72,\n        \"weight\": 143.2,\n        \"gender\": \"F\",\n        \"platelets\": 154.5,\n        \"spo2\": 93.25,\n        \"creatinine\": 4.08,\n        \"hematocrit\": 41.7,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 70.75,\n        \"calcium\": 8,\n        \"wbc\": 5.1000000000000005,\n        \"glucose\": 202.4,\n        \"inr\": 1.6,\n        \"potassium\": 4.662515106979287,\n        \"sodium\": 139.2340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:55.735338Z\",\n        \"updated_at\": \"2025-04-13T10:10:55.735338Z\"\n    },\n    {\n        \"id\": 763,\n        \"latest_alert\": {\n            \"id\": 1133,\n            \"prediction\": false,\n            \"confidence\": 0.8152451868134716,\n            \"is_correct\": true,\n            \"model_version\": \"latest\",\n            \"created_at\": \"2025-04-13T10:10:55.779605Z\",\n            \"patient\": 763\n        },\n        \"name\": \"April Williams\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 55,\n        \"weight\": 91.2,\n        \"gender\": \"F\",\n        \"platelets\": 117.5,\n        \"spo2\": 89.75,\n        \"creatinine\": 1.35,\n        \"hematocrit\": 39.5,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 140.75,\n        \"calcium\": 5.85,\n        \"wbc\": 5.833333333333333,\n        \"glucose\": 154.8,\n        \"inr\": 1.15,\n        \"potassium\": 3.775,\n        \"sodium\": 142,\n        \"ethnicity\": 4,\n        \"created_at\": \"2025-04-13T10:10:55.750035Z\",\n        \"updated_at\": \"2025-04-13T10:10:55.750035Z\"\n    },\n    {\n        \"id\": 1210,\n        \"latest_alert\": {\n            \"id\": 1128,\n            \"prediction\": false,\n            \"confidence\": 0.870611683730651,\n            \"is_correct\": true,\n            \"model_version\": \"latest\",\n            \"created_at\": \"2025-04-13T10:10:55.670142Z\",\n            \"patient\": 1210\n        },\n        \"name\": \"Gregory Dubois\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 84,\n        \"weight\": 72.5,\n        \"gender\": \"M\",\n        \"platelets\": 212.00016169913164,\n        \"spo2\": 97,\n        \"creatinine\": 0.88,\n        \"hematocrit\": 32.71712779935248,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 115.5,\n        \"calcium\": 8.2,\n        \"wbc\": 12.149317179751952,\n        \"glucose\": 110.96998397159518,\n        \"inr\": 1.1,\n        \"potassium\": 3.690997231089179,\n        \"sodium\": 136.76644395909858,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:55.652556Z\",\n        \"updated_at\": \"2025-04-13T10:10:55.652556Z\"\n    },\n    {\n        \"id\": 1545,\n        \"latest_alert\": {\n            \"id\": 1129,\n            \"prediction\": false,\n            \"confidence\": 0.8278706222696335,\n            \"is_correct\": true,\n            \"model_version\": \"latest\",\n            \"created_at\": \"2025-04-13T10:10:55.689286Z\",\n            \"patient\": 1545\n        },\n        \"name\": \"Bennie Zymowski\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 69,\n        \"weight\": 66.7,\n        \"gender\": \"M\",\n        \"platelets\": 22.775,\n        \"spo2\": 93.75,\n        \"creatinine\": 1.2,\n        \"hematocrit\": 26.960591997979623,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 72,\n        \"calcium\": 7.4,\n        \"wbc\": 1.5,\n        \"glucose\": 107.44628453889644,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.012515106979286,\n        \"sodium\": 137.8340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:55.673920Z\",\n        \"updated_at\": \"2025-04-13T10:10:55.673920Z\"\n    },\n    {\n        \"id\": 1665,\n        \"latest_alert\": {\n            \"id\": 1126,\n            \"prediction\": false,\n            \"confidence\": 0.6275669589134868,\n            \"is_correct\": true,\n            \"model_version\": \"latest\",\n            \"created_at\": \"2025-04-13T10:10:55.633177Z\",\n            \"patient\": 1665\n        },\n        \"name\": \"John Hill\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 48,\n        \"weight\": 85.7,\n        \"gender\": \"M\",\n        \"platelets\": 261.5,\n        \"spo2\": 98.75,\n        \"creatinine\": 1.515,\n        \"hematocrit\": 42.18,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 102,\n        \"calcium\": 8.35,\n        \"wbc\": 10.499999999999998,\n        \"glucose\": 132.8,\n        \"inr\": 1,\n        \"potassium\": 4.025,\n        \"sodium\": 137.4,\n        \"ethnicity\": 0,\n        \"created_at\": \"2025-04-13T10:10:55.616925Z\",\n        \"updated_at\": \"2025-04-13T10:10:55.616925Z\"\n    },\n    {\n        \"id\": 2305,\n        \"latest_alert\": {\n            \"id\": 1131,\n            \"prediction\": false,\n            \"confidence\": 0.6691557741658599,\n            \"is_correct\": true,\n            \"model_version\": \"latest\",\n            \"created_at\": \"2025-04-13T10:10:55.734183Z\",\n            \"patient\": 2305\n        },\n        \"name\": \"Aaron Nicolas\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 80,\n        \"weight\": 68.2,\n        \"gender\": \"M\",\n        \"platelets\": 121,\n        \"spo2\": 99.5,\n        \"creatinine\": 1.03,\n        \"hematocrit\": 34.78059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 78,\n        \"calcium\": 8.1,\n        \"wbc\": 15.199999999999998,\n        \"glucose\": 144.4,\n        \"inr\": 1.7000000000000002,\n        \"potassium\": 4.012515106979286,\n        \"sodium\": 147.4340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:55.711342Z\",\n        \"updated_at\": \"2025-04-13T10:10:55.711342Z\"\n    },\n    {\n        \"id\": 2423,\n        \"latest_alert\": {\n            \"id\": 1127,\n            \"prediction\": true,\n            \"confidence\": 0.6865875574146647,\n            \"is_correct\": true,\n            \"model_version\": \"latest\",\n            \"created_at\": \"2025-04-13T10:10:55.652556Z\",\n            \"patient\": 2423\n        },\n        \"name\": \"Kirsten Dannis\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 61,\n        \"weight\": 136,\n        \"gender\": \"F\",\n        \"platelets\": 142.5,\n        \"spo2\": 87,\n        \"creatinine\": 2.77,\n        \"hematocrit\": 40.48,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 103,\n        \"calcium\": 8.7,\n        \"wbc\": 37.63333333333333,\n        \"glucose\": 406.4,\n        \"inr\": 3.4000000000000004,\n        \"potassium\": 4.725,\n        \"sodium\": 138.2,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:55.633177Z\",\n        \"updated_at\": \"2025-04-13T10:10:55.633177Z\"\n    },\n    {\n        \"id\": 2546,\n        \"latest_alert\": {\n            \"id\": 1135,\n            \"prediction\": false,\n            \"confidence\": 0.6298608193402516,\n            \"is_correct\": true,\n            \"model_version\": \"latest\",\n            \"created_at\": \"2025-04-13T10:10:55.812518Z\",\n            \"patient\": 2546\n        },\n        \"name\": \"Kenneth Brown\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 49,\n        \"weight\": 85.7,\n        \"gender\": \"M\",\n        \"platelets\": 136,\n        \"spo2\": 94.5,\n        \"creatinine\": 1.31,\n        \"hematocrit\": 34.42059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 64.5,\n        \"calcium\": 7.6,\n        \"wbc\": 10.800000000000002,\n        \"glucose\": 182.4462845388965,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.212515106979287,\n        \"sodium\": 141.0340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:55.803828Z\",\n        \"updated_at\": \"2025-04-13T10:10:55.803828Z\"\n    },\n    {\n        \"id\": 3952,\n        \"latest_alert\": {\n            \"id\": 1119,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:10:42.173988Z\",\n            \"patient\": 3952\n        },\n        \"name\": \"Aaron Nicolas\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 80,\n        \"weight\": 68.2,\n        \"gender\": \"M\",\n        \"platelets\": 121,\n        \"spo2\": 99.5,\n        \"creatinine\": 1.03,\n        \"hematocrit\": 34.78059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 78,\n        \"calcium\": 8.1,\n        \"wbc\": 15.199999999999998,\n        \"glucose\": 144.4,\n        \"inr\": 1.7000000000000002,\n        \"potassium\": 4.012515106979286,\n        \"sodium\": 147.4340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:42.153626Z\",\n        \"updated_at\": \"2025-04-13T10:10:42.153626Z\"\n    },\n    {\n        \"id\": 3953,\n        \"latest_alert\": {\n            \"id\": 1120,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:10:44.255463Z\",\n            \"patient\": 3953\n        },\n        \"name\": \"Michael Poeppelman\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 46,\n        \"weight\": 66.7,\n        \"gender\": \"M\",\n        \"platelets\": 212.00016169913164,\n        \"spo2\": 94.25,\n        \"creatinine\": 1.2043159961514207,\n        \"hematocrit\": 32.71712779935248,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 105,\n        \"calcium\": 8.244775461943298,\n        \"wbc\": 12.149317179751952,\n        \"glucose\": 154.6792102557034,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 4.05498632837324,\n        \"sodium\": 138.1623774490296,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:44.238553Z\",\n        \"updated_at\": \"2025-04-13T10:10:44.238553Z\"\n    },\n    {\n        \"id\": 3954,\n        \"latest_alert\": {\n            \"id\": 1121,\n            \"prediction\": true,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:10:46.299505Z\",\n            \"patient\": 3954\n        },\n        \"name\": \"Kirsten Dannis\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 61,\n        \"weight\": 136,\n        \"gender\": \"F\",\n        \"platelets\": 142.5,\n        \"spo2\": 87,\n        \"creatinine\": 2.77,\n        \"hematocrit\": 40.48,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 103,\n        \"calcium\": 8.7,\n        \"wbc\": 37.63333333333333,\n        \"glucose\": 406.4,\n        \"inr\": 3.4000000000000004,\n        \"potassium\": 4.725,\n        \"sodium\": 138.2,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:46.284021Z\",\n        \"updated_at\": \"2025-04-13T10:10:46.284021Z\"\n    },\n    {\n        \"id\": 3955,\n        \"latest_alert\": {\n            \"id\": 1122,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:10:48.389601Z\",\n            \"patient\": 3955\n        },\n        \"name\": \"April Williams\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 55,\n        \"weight\": 91.2,\n        \"gender\": \"F\",\n        \"platelets\": 117.5,\n        \"spo2\": 89.75,\n        \"creatinine\": 1.35,\n        \"hematocrit\": 39.5,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 140.75,\n        \"calcium\": 5.85,\n        \"wbc\": 5.833333333333333,\n        \"glucose\": 154.8,\n        \"inr\": 1.15,\n        \"potassium\": 3.775,\n        \"sodium\": 142,\n        \"ethnicity\": 4,\n        \"created_at\": \"2025-04-13T10:10:48.358817Z\",\n        \"updated_at\": \"2025-04-13T10:10:48.358817Z\"\n    },\n    {\n        \"id\": 3956,\n        \"latest_alert\": {\n            \"id\": 1123,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:10:50.479833Z\",\n            \"patient\": 3956\n        },\n        \"name\": \"Scott Sellers\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 78,\n        \"weight\": 60.5,\n        \"gender\": \"M\",\n        \"platelets\": 216,\n        \"spo2\": 96.25,\n        \"creatinine\": 0.88,\n        \"hematocrit\": 33.94387835978835,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 84,\n        \"calcium\": 8.6,\n        \"wbc\": 5.1,\n        \"glucose\": 141.16998397159517,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 3.79099723108918,\n        \"sodium\": 136.16644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:50.448386Z\",\n        \"updated_at\": \"2025-04-13T10:10:50.448386Z\"\n    },\n    {\n        \"id\": 3957,\n        \"latest_alert\": {\n            \"id\": 1124,\n            \"prediction\": true,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:10:52.540919Z\",\n            \"patient\": 3957\n        },\n        \"name\": \"Roberta Lawrence\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 72,\n        \"weight\": 143.2,\n        \"gender\": \"F\",\n        \"platelets\": 154.5,\n        \"spo2\": 93.25,\n        \"creatinine\": 4.08,\n        \"hematocrit\": 41.7,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 70.75,\n        \"calcium\": 8,\n        \"wbc\": 5.1000000000000005,\n        \"glucose\": 202.4,\n        \"inr\": 1.6,\n        \"potassium\": 4.662515106979287,\n        \"sodium\": 139.2340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:52.534722Z\",\n        \"updated_at\": \"2025-04-13T10:10:52.534722Z\"\n    },\n    {\n        \"id\": 3958,\n        \"latest_alert\": {\n            \"id\": 1125,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:10:54.634469Z\",\n            \"patient\": 3958\n        },\n        \"name\": \"John Hill\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 48,\n        \"weight\": 85.7,\n        \"gender\": \"M\",\n        \"platelets\": 261.5,\n        \"spo2\": 98.75,\n        \"creatinine\": 1.515,\n        \"hematocrit\": 42.18,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 102,\n        \"calcium\": 8.35,\n        \"wbc\": 10.499999999999998,\n        \"glucose\": 132.8,\n        \"inr\": 1,\n        \"potassium\": 4.025,\n        \"sodium\": 137.4,\n        \"ethnicity\": 0,\n        \"created_at\": \"2025-04-13T10:10:54.603855Z\",\n        \"updated_at\": \"2025-04-13T10:10:54.603855Z\"\n    },\n    {\n        \"id\": 3959,\n        \"latest_alert\": {\n            \"id\": 1136,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:10:56.717329Z\",\n            \"patient\": 3959\n        },\n        \"name\": \"Bennie Zymowski\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 69,\n        \"weight\": 66.7,\n        \"gender\": \"M\",\n        \"platelets\": 22.775,\n        \"spo2\": 93.75,\n        \"creatinine\": 1.2,\n        \"hematocrit\": 26.960591997979623,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 72,\n        \"calcium\": 7.4,\n        \"wbc\": 1.5,\n        \"glucose\": 107.44628453889644,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.012515106979286,\n        \"sodium\": 137.8340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:10:56.690454Z\",\n        \"updated_at\": \"2025-04-13T10:10:56.690454Z\"\n    },\n    {\n        \"id\": 3960,\n        \"latest_alert\": {\n            \"id\": 1137,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:10:58.790866Z\",\n            \"patient\": 3960\n        },\n        \"name\": \"Kathryn Aubert\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 72,\n        \"weight\": 68.9,\n        \"gender\": \"F\",\n        \"platelets\": 268,\n        \"spo2\": 99,\n        \"creatinine\": 2.32,\n        \"hematocrit\": 28.37944855072464,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 86,\n        \"calcium\": 9.2,\n        \"wbc\": 6.2,\n        \"glucose\": 96,\n        \"inr\": 4.3,\n        \"potassium\": 4.4589548387096745,\n        \"sodium\": 138.20984687083887,\n        \"ethnicity\": 4,\n        \"created_at\": \"2025-04-13T10:10:58.767709Z\",\n        \"updated_at\": \"2025-04-13T10:10:58.767709Z\"\n    },\n    {\n        \"id\": 3961,\n        \"latest_alert\": {\n            \"id\": 1138,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:00.873752Z\",\n            \"patient\": 3961\n        },\n        \"name\": \"Gregory Dubois\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 84,\n        \"weight\": 72.5,\n        \"gender\": \"M\",\n        \"platelets\": 212.00016169913164,\n        \"spo2\": 97,\n        \"creatinine\": 0.88,\n        \"hematocrit\": 32.71712779935248,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 115.5,\n        \"calcium\": 8.2,\n        \"wbc\": 12.149317179751952,\n        \"glucose\": 110.96998397159518,\n        \"inr\": 1.1,\n        \"potassium\": 3.690997231089179,\n        \"sodium\": 136.76644395909858,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:00.843752Z\",\n        \"updated_at\": \"2025-04-13T10:11:00.843752Z\"\n    },\n    {\n        \"id\": 3962,\n        \"latest_alert\": {\n            \"id\": 1139,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:02.932463Z\",\n            \"patient\": 3962\n        },\n        \"name\": \"Kenneth Brown\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 49,\n        \"weight\": 85.7,\n        \"gender\": \"M\",\n        \"platelets\": 136,\n        \"spo2\": 94.5,\n        \"creatinine\": 1.31,\n        \"hematocrit\": 34.42059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 64.5,\n        \"calcium\": 7.6,\n        \"wbc\": 10.800000000000002,\n        \"glucose\": 182.4462845388965,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.212515106979287,\n        \"sodium\": 141.0340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:02.917065Z\",\n        \"updated_at\": \"2025-04-13T10:11:02.917065Z\"\n    },\n    {\n        \"id\": 3963,\n        \"latest_alert\": {\n            \"id\": 1140,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:05.002501Z\",\n            \"patient\": 3963\n        },\n        \"name\": \"Betty Hannigan\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 72,\n        \"weight\": 52.7,\n        \"gender\": \"F\",\n        \"platelets\": 281,\n        \"spo2\": 90.5,\n        \"creatinine\": 0.935,\n        \"hematocrit\": 33.92387835978835,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 77.5,\n        \"calcium\": 8.8,\n        \"wbc\": 9.266666666666667,\n        \"glucose\": 117.76998397159518,\n        \"inr\": 1.1,\n        \"potassium\": 3.99099723108918,\n        \"sodium\": 138.56644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:04.987483Z\",\n        \"updated_at\": \"2025-04-13T10:11:04.987483Z\"\n    },\n    {\n        \"id\": 3964,\n        \"latest_alert\": {\n            \"id\": 1141,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:07.095663Z\",\n            \"patient\": 3964\n        },\n        \"name\": \"Wilbur Eye\",\n        \"admission_date\": \"2022-01-01T00:00:00Z\",\n        \"age\": 63,\n        \"weight\": 91.1,\n        \"gender\": \"M\",\n        \"platelets\": 212.00016169913164,\n        \"spo2\": 91.75,\n        \"creatinine\": 0.53,\n        \"hematocrit\": 32.71712779935248,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 77.25,\n        \"calcium\": 8.4,\n        \"wbc\": 12.149317179751952,\n        \"glucose\": 176.56998397159518,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 4.140997231089179,\n        \"sodium\": 139.76644395909858,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:07.071253Z\",\n        \"updated_at\": \"2025-04-13T10:11:07.071253Z\"\n    },\n    {\n        \"id\": 3965,\n        \"latest_alert\": {\n            \"id\": 1142,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:09.167083Z\",\n            \"patient\": 3965\n        },\n        \"name\": \"Linda Cole\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 54,\n        \"weight\": 108.8,\n        \"gender\": \"F\",\n        \"platelets\": 167.5,\n        \"spo2\": 97.5,\n        \"creatinine\": 1.45929901422859,\n        \"hematocrit\": 33.720000000000006,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 84.5,\n        \"calcium\": 8.263236423688438,\n        \"wbc\": 15.033333333333331,\n        \"glucose\": 134,\n        \"inr\": 1.05,\n        \"potassium\": 4.387515106979286,\n        \"sodium\": 138.1159934626163,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:09.150452Z\",\n        \"updated_at\": \"2025-04-13T10:11:09.150452Z\"\n    },\n    {\n        \"id\": 3966,\n        \"latest_alert\": {\n            \"id\": 1143,\n            \"prediction\": true,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:11.270942Z\",\n            \"patient\": 3966\n        },\n        \"name\": \"Jo Haynes\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 60,\n        \"weight\": 173.7,\n        \"gender\": \"F\",\n        \"platelets\": 236,\n        \"spo2\": 93.5,\n        \"creatinine\": 1.71,\n        \"hematocrit\": 29.93944855072464,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 101.5,\n        \"calcium\": 8,\n        \"wbc\": 6.099999999999999,\n        \"glucose\": 86.6,\n        \"inr\": 1.524527245636436,\n        \"potassium\": 3.808954838709674,\n        \"sodium\": 140.60984687083888,\n        \"ethnicity\": 4,\n        \"created_at\": \"2025-04-13T10:11:11.243161Z\",\n        \"updated_at\": \"2025-04-13T10:11:11.243161Z\"\n    },\n    {\n        \"id\": 3967,\n        \"latest_alert\": {\n            \"id\": 1144,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:13.353401Z\",\n            \"patient\": 3967\n        },\n        \"name\": \"Russell Butler\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 54,\n        \"weight\": 77.1,\n        \"gender\": \"M\",\n        \"platelets\": 79.5,\n        \"spo2\": 95.25,\n        \"creatinine\": 0.79,\n        \"hematocrit\": 28.84059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 101.5,\n        \"calcium\": 7.7,\n        \"wbc\": 5.433333333333334,\n        \"glucose\": 136.24628453889645,\n        \"inr\": 1.6,\n        \"potassium\": 4.062515106979286,\n        \"sodium\": 139.8340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:13.322509Z\",\n        \"updated_at\": \"2025-04-13T10:11:13.322509Z\"\n    },\n    {\n        \"id\": 3968,\n        \"latest_alert\": {\n            \"id\": 1145,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:15.441728Z\",\n            \"patient\": 3968\n        },\n        \"name\": \"Rina Haley\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 71,\n        \"weight\": 97,\n        \"gender\": \"F\",\n        \"platelets\": 189.3418375836324,\n        \"spo2\": 94.5,\n        \"creatinine\": 1.45929901422859,\n        \"hematocrit\": 34.39546186049789,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 68.25,\n        \"calcium\": 8.263236423688438,\n        \"wbc\": 12.063538571588216,\n        \"glucose\": 136.4,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.185701475058662,\n        \"sodium\": 138.1159934626163,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:15.424031Z\",\n        \"updated_at\": \"2025-04-13T10:11:15.424031Z\"\n    },\n    {\n        \"id\": 3969,\n        \"latest_alert\": {\n            \"id\": 1146,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:17.520833Z\",\n            \"patient\": 3969\n        },\n        \"name\": \"Paula Mohan\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 80,\n        \"weight\": 85.2,\n        \"gender\": \"F\",\n        \"platelets\": 169,\n        \"spo2\": 95.5,\n        \"creatinine\": 1.45929901422859,\n        \"hematocrit\": 31.56,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 93.5,\n        \"calcium\": 8.263236423688438,\n        \"wbc\": 15.266666666666666,\n        \"glucose\": 137.8,\n        \"inr\": 1.2,\n        \"potassium\": 3.65,\n        \"sodium\": 138.1159934626163,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:17.492884Z\",\n        \"updated_at\": \"2025-04-13T10:11:17.492884Z\"\n    },\n    {\n        \"id\": 3970,\n        \"latest_alert\": {\n            \"id\": 1147,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:19.599850Z\",\n            \"patient\": 3970\n        },\n        \"name\": \"Lee Rubert\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 41,\n        \"weight\": 77.7,\n        \"gender\": \"M\",\n        \"platelets\": 374,\n        \"spo2\": 97.75,\n        \"creatinine\": 1.7799999999999998,\n        \"hematocrit\": 29.79197368421054,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 99.75,\n        \"calcium\": 7.699999999999999,\n        \"wbc\": 23.666666666666668,\n        \"glucose\": 116.2,\n        \"inr\": 1.4498320388349524,\n        \"potassium\": 4.131911290322582,\n        \"sodium\": 138.52449324324326,\n        \"ethnicity\": 0,\n        \"created_at\": \"2025-04-13T10:11:19.579963Z\",\n        \"updated_at\": \"2025-04-13T10:11:19.579963Z\"\n    },\n    {\n        \"id\": 3971,\n        \"latest_alert\": {\n            \"id\": 1148,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:21.685978Z\",\n            \"patient\": 3971\n        },\n        \"name\": \"Dallas Sloan\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 80,\n        \"weight\": 85.7,\n        \"gender\": \"M\",\n        \"platelets\": 150,\n        \"spo2\": 96.25,\n        \"creatinine\": 1.17,\n        \"hematocrit\": 36.58059199797962,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 94,\n        \"calcium\": 8,\n        \"wbc\": 11.699999999999998,\n        \"glucose\": 116.44628453889644,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.412515106979287,\n        \"sodium\": 138.0340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:21.650958Z\",\n        \"updated_at\": \"2025-04-13T10:11:21.650958Z\"\n    },\n    {\n        \"id\": 3972,\n        \"latest_alert\": {\n            \"id\": 1149,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:23.788204Z\",\n            \"patient\": 3972\n        },\n        \"name\": \"Stanley Scott\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 62,\n        \"weight\": 47.4,\n        \"gender\": \"M\",\n        \"platelets\": 205,\n        \"spo2\": 95.25,\n        \"creatinine\": 4.775,\n        \"hematocrit\": 27.826259039900243,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 77,\n        \"calcium\": 6.3,\n        \"wbc\": 24.600000000000005,\n        \"glucose\": 188.6052486170867,\n        \"inr\": 1.3,\n        \"potassium\": 3.803465845464727,\n        \"sodium\": 135.01837621498,\n        \"ethnicity\": 4,\n        \"created_at\": \"2025-04-13T10:11:23.760838Z\",\n        \"updated_at\": \"2025-04-13T10:11:23.760838Z\"\n    },\n    {\n        \"id\": 3973,\n        \"latest_alert\": {\n            \"id\": 1150,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:25.882675Z\",\n            \"patient\": 3973\n        },\n        \"name\": \"Hattie Davis\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 29,\n        \"weight\": 89.8,\n        \"gender\": \"F\",\n        \"platelets\": 239,\n        \"spo2\": 95.5,\n        \"creatinine\": 0.93,\n        \"hematocrit\": 35.92387835978835,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 101.5,\n        \"calcium\": 7,\n        \"wbc\": 6.400000000000001,\n        \"glucose\": 129.6,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 3.99099723108918,\n        \"sodium\": 140.36644395909858,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:25.849726Z\",\n        \"updated_at\": \"2025-04-13T10:11:25.849726Z\"\n    },\n    {\n        \"id\": 3974,\n        \"latest_alert\": {\n            \"id\": 1151,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:27.997647Z\",\n            \"patient\": 3974\n        },\n        \"name\": \"Sandra Broadwater\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 78,\n        \"weight\": 85.7,\n        \"gender\": \"F\",\n        \"platelets\": 282,\n        \"spo2\": 94.75,\n        \"creatinine\": 1.385,\n        \"hematocrit\": 34.78664885675179,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 79,\n        \"calcium\": 7.9,\n        \"wbc\": 9.216089479943548,\n        \"glucose\": 150.64628453889645,\n        \"inr\": 1.1,\n        \"potassium\": 3.862515106979287,\n        \"sodium\": 138.63400213980032,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:27.961648Z\",\n        \"updated_at\": \"2025-04-13T10:11:27.961648Z\"\n    },\n    {\n        \"id\": 3975,\n        \"latest_alert\": {\n            \"id\": 1152,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:30.090192Z\",\n            \"patient\": 3975\n        },\n        \"name\": \"Scott Barker\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 83,\n        \"weight\": 56.1,\n        \"gender\": \"M\",\n        \"platelets\": 161.5,\n        \"spo2\": 98.25,\n        \"creatinine\": 0.91,\n        \"hematocrit\": 28.1,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 89.25,\n        \"calcium\": 8.1,\n        \"wbc\": 8.433333333333334,\n        \"glucose\": 145.16998397159517,\n        \"inr\": 1.1,\n        \"potassium\": 4.24099723108918,\n        \"sodium\": 136.16644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:30.064987Z\",\n        \"updated_at\": \"2025-04-13T10:11:30.064987Z\"\n    },\n    {\n        \"id\": 3976,\n        \"latest_alert\": {\n            \"id\": 1153,\n            \"prediction\": true,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:32.200053Z\",\n            \"patient\": 3976\n        },\n        \"name\": \"Frank Langford\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 76,\n        \"weight\": 82.1,\n        \"gender\": \"M\",\n        \"platelets\": 254,\n        \"spo2\": 96.5,\n        \"creatinine\": 2.305,\n        \"hematocrit\": 28.603878359788347,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 86.25,\n        \"calcium\": 9.4,\n        \"wbc\": 12.533333333333331,\n        \"glucose\": 299.2,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 4.91599723108918,\n        \"sodium\": 134.16644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:32.175520Z\",\n        \"updated_at\": \"2025-04-13T10:11:32.175520Z\"\n    },\n    {\n        \"id\": 3977,\n        \"latest_alert\": {\n            \"id\": 1154,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:34.304641Z\",\n            \"patient\": 3977\n        },\n        \"name\": \"Wilhelmina Aguilar\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 66,\n        \"weight\": 79.5,\n        \"gender\": \"F\",\n        \"platelets\": 225,\n        \"spo2\": 93.5,\n        \"creatinine\": 1.01,\n        \"hematocrit\": 35.02605685877215,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 63.5,\n        \"calcium\": 8.9,\n        \"wbc\": 15.81608947994355,\n        \"glucose\": 117.2810175699598,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.4,\n        \"sodium\": 131.5644990010916,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:34.270538Z\",\n        \"updated_at\": \"2025-04-13T10:11:34.270538Z\"\n    },\n    {\n        \"id\": 3978,\n        \"latest_alert\": {\n            \"id\": 1155,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:36.415427Z\",\n            \"patient\": 3978\n        },\n        \"name\": \"Sean Garcia\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 83,\n        \"weight\": 88.9,\n        \"gender\": \"M\",\n        \"platelets\": 250,\n        \"spo2\": 97.5,\n        \"creatinine\": 1.14,\n        \"hematocrit\": 31.903878359788347,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 69.25,\n        \"calcium\": 8.1,\n        \"wbc\": 15.6,\n        \"glucose\": 151.96998397159518,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 3.8909972310891794,\n        \"sodium\": 144.56644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:36.366823Z\",\n        \"updated_at\": \"2025-04-13T10:11:36.366823Z\"\n    },\n    {\n        \"id\": 3979,\n        \"latest_alert\": {\n            \"id\": 1156,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:38.510885Z\",\n            \"patient\": 3979\n        },\n        \"name\": \"Veta Gray\",\n        \"admission_date\": \"2022-01-02T00:00:00Z\",\n        \"age\": 67,\n        \"weight\": 88,\n        \"gender\": \"F\",\n        \"platelets\": 269,\n        \"spo2\": 94.5,\n        \"creatinine\": 1.4,\n        \"hematocrit\": 26.760591997979635,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 71.25,\n        \"calcium\": 8.6,\n        \"wbc\": 7.900000000000001,\n        \"glucose\": 114.64628453889644,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.012515106979286,\n        \"sodium\": 139.2340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:38.486271Z\",\n        \"updated_at\": \"2025-04-13T10:11:38.486271Z\"\n    },\n    {\n        \"id\": 3980,\n        \"latest_alert\": {\n            \"id\": 1157,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:40.592465Z\",\n            \"patient\": 3980\n        },\n        \"name\": \"Leo Scott\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 45,\n        \"weight\": 99.8,\n        \"gender\": \"M\",\n        \"platelets\": 339,\n        \"spo2\": 92.25,\n        \"creatinine\": 1.68,\n        \"hematocrit\": 30.220591997979625,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 97.25,\n        \"calcium\": 8.3,\n        \"wbc\": 8.2,\n        \"glucose\": 168.24628453889645,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.362515106979287,\n        \"sodium\": 138.0340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:40.575784Z\",\n        \"updated_at\": \"2025-04-13T10:11:40.575784Z\"\n    },\n    {\n        \"id\": 3981,\n        \"latest_alert\": {\n            \"id\": 1158,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:42.701279Z\",\n            \"patient\": 3981\n        },\n        \"name\": \"Martin Rodriguez\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 80,\n        \"weight\": 85.7,\n        \"gender\": \"M\",\n        \"platelets\": 393,\n        \"spo2\": 94.5,\n        \"creatinine\": 1.03,\n        \"hematocrit\": 35.80059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 85,\n        \"calcium\": 7.1,\n        \"wbc\": 5.599999999999999,\n        \"glucose\": 148.84628453889644,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 3.962515106979287,\n        \"sodium\": 139.2340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:42.661473Z\",\n        \"updated_at\": \"2025-04-13T10:11:42.661473Z\"\n    },\n    {\n        \"id\": 3982,\n        \"latest_alert\": {\n            \"id\": 1159,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:44.849577Z\",\n            \"patient\": 3982\n        },\n        \"name\": \"Cory Dansie\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 43,\n        \"weight\": 76.4,\n        \"gender\": \"M\",\n        \"platelets\": 95,\n        \"spo2\": 99.5,\n        \"creatinine\": 3.05,\n        \"hematocrit\": 28.74664885675178,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 87.5,\n        \"calcium\": 7.45,\n        \"wbc\": 14.482756146610214,\n        \"glucose\": 153.8,\n        \"inr\": 1.8,\n        \"potassium\": 3.962515106979287,\n        \"sodium\": 133.4340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:44.809110Z\",\n        \"updated_at\": \"2025-04-13T10:11:44.809110Z\"\n    },\n    {\n        \"id\": 3983,\n        \"latest_alert\": {\n            \"id\": 1160,\n            \"prediction\": true,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:46.947202Z\",\n            \"patient\": 3983\n        },\n        \"name\": \"Fabiola Lentz\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 71,\n        \"weight\": 85.7,\n        \"gender\": \"F\",\n        \"platelets\": 289,\n        \"spo2\": 94.75,\n        \"creatinine\": 1.29,\n        \"hematocrit\": 36.40059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 75.75,\n        \"calcium\": 8.3,\n        \"wbc\": 11.9,\n        \"glucose\": 192.0462845388965,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.162515106979287,\n        \"sodium\": 138.0340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:46.913250Z\",\n        \"updated_at\": \"2025-04-13T10:11:46.913250Z\"\n    },\n    {\n        \"id\": 3984,\n        \"latest_alert\": {\n            \"id\": 1161,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:49.062147Z\",\n            \"patient\": 3984\n        },\n        \"name\": \"John Laperouse\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 60,\n        \"weight\": 95.6,\n        \"gender\": \"M\",\n        \"platelets\": 195,\n        \"spo2\": 93.75,\n        \"creatinine\": 0.64,\n        \"hematocrit\": 41.3,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 85.75,\n        \"calcium\": 7.9,\n        \"wbc\": 11.333333333333334,\n        \"glucose\": 141,\n        \"inr\": 1,\n        \"potassium\": 4.3,\n        \"sodium\": 142.8,\n        \"ethnicity\": 2,\n        \"created_at\": \"2025-04-13T10:11:49.031104Z\",\n        \"updated_at\": \"2025-04-13T10:11:49.031104Z\"\n    },\n    {\n        \"id\": 3985,\n        \"latest_alert\": {\n            \"id\": 1162,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:51.159202Z\",\n            \"patient\": 3985\n        },\n        \"name\": \"Kevin Follansbee\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 50,\n        \"weight\": 85.7,\n        \"gender\": \"M\",\n        \"platelets\": 244,\n        \"spo2\": 98,\n        \"creatinine\": 0.59,\n        \"hematocrit\": 29.15903225806452,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 129,\n        \"calcium\": 7.7,\n        \"wbc\": 18.5,\n        \"glucose\": 148.2405498281787,\n        \"inr\": 1.3,\n        \"potassium\": 3.985357142857143,\n        \"sodium\": 127.93676470588234,\n        \"ethnicity\": 3,\n        \"created_at\": \"2025-04-13T10:11:51.134457Z\",\n        \"updated_at\": \"2025-04-13T10:11:51.134457Z\"\n    },\n    {\n        \"id\": 3986,\n        \"latest_alert\": {\n            \"id\": 1163,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:53.269705Z\",\n            \"patient\": 3986\n        },\n        \"name\": \"Judy Lewicki\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 83,\n        \"weight\": 69.4,\n        \"gender\": \"F\",\n        \"platelets\": 241,\n        \"spo2\": 90.75,\n        \"creatinine\": 0.75,\n        \"hematocrit\": 33.04387835978835,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 109.5,\n        \"calcium\": 8.350000000000001,\n        \"wbc\": 11.800000000000002,\n        \"glucose\": 137.96998397159518,\n        \"inr\": 2,\n        \"potassium\": 3.84099723108918,\n        \"sodium\": 138.56644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:53.231246Z\",\n        \"updated_at\": \"2025-04-13T10:11:53.231246Z\"\n    },\n    {\n        \"id\": 3987,\n        \"latest_alert\": {\n            \"id\": 1164,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:55.376081Z\",\n            \"patient\": 3987\n        },\n        \"name\": \"Christina Valenzuela\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 38,\n        \"weight\": 75.7,\n        \"gender\": \"F\",\n        \"platelets\": 275,\n        \"spo2\": 93.25,\n        \"creatinine\": 1,\n        \"hematocrit\": 34.48387835978835,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 104,\n        \"calcium\": 7.8,\n        \"wbc\": 22.899999999999995,\n        \"glucose\": 144.56998397159518,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 4.09099723108918,\n        \"sodium\": 138.56644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:55.344796Z\",\n        \"updated_at\": \"2025-04-13T10:11:55.344796Z\"\n    },\n    {\n        \"id\": 3988,\n        \"latest_alert\": {\n            \"id\": 1165,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:57.465555Z\",\n            \"patient\": 3988\n        },\n        \"name\": \"Mellisa Bowser\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 81,\n        \"weight\": 88.9,\n        \"gender\": \"F\",\n        \"platelets\": 195,\n        \"spo2\": 97.5,\n        \"creatinine\": 1.45929901422859,\n        \"hematocrit\": 25.58,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 76.5,\n        \"calcium\": 8.263236423688438,\n        \"wbc\": 9.633333333333333,\n        \"glucose\": 134.32730210885626,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.185701475058662,\n        \"sodium\": 138.1159934626163,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:57.446000Z\",\n        \"updated_at\": \"2025-04-13T10:11:57.446000Z\"\n    },\n    {\n        \"id\": 3989,\n        \"latest_alert\": {\n            \"id\": 1166,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:11:59.561828Z\",\n            \"patient\": 3989\n        },\n        \"name\": \"Laurette Paddock\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 50,\n        \"weight\": 127,\n        \"gender\": \"F\",\n        \"platelets\": 164,\n        \"spo2\": 98,\n        \"creatinine\": 0.94,\n        \"hematocrit\": 34.24059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 93.75,\n        \"calcium\": 7.2,\n        \"wbc\": 14,\n        \"glucose\": 127.64628453889644,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 3.912515106979287,\n        \"sodium\": 136.2340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:11:59.539417Z\",\n        \"updated_at\": \"2025-04-13T10:11:59.539417Z\"\n    },\n    {\n        \"id\": 3990,\n        \"latest_alert\": {\n            \"id\": 1167,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:01.676101Z\",\n            \"patient\": 3990\n        },\n        \"name\": \"Bernadette Roden\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 54,\n        \"weight\": 63.9,\n        \"gender\": \"F\",\n        \"platelets\": 132,\n        \"spo2\": 97.75,\n        \"creatinine\": 1.2043159961514207,\n        \"hematocrit\": 23.96,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 98,\n        \"calcium\": 8.244775461943298,\n        \"wbc\": 6.5,\n        \"glucose\": 150.3699839715952,\n        \"inr\": 1.05,\n        \"potassium\": 4.11599723108918,\n        \"sodium\": 138.1623774490296,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:01.634910Z\",\n        \"updated_at\": \"2025-04-13T10:12:01.634910Z\"\n    },\n    {\n        \"id\": 3991,\n        \"latest_alert\": {\n            \"id\": 1168,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:03.783962Z\",\n            \"patient\": 3991\n        },\n        \"name\": \"Susie Bond\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 46,\n        \"weight\": 72.6,\n        \"gender\": \"F\",\n        \"platelets\": 247,\n        \"spo2\": 95.5,\n        \"creatinine\": 1,\n        \"hematocrit\": 39.74542857142858,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 84,\n        \"calcium\": 8.5,\n        \"wbc\": 9.7,\n        \"glucose\": 150.83586310620015,\n        \"inr\": 1.492750645994831,\n        \"potassium\": 4.541363636363637,\n        \"sodium\": 134.64270833333333,\n        \"ethnicity\": 2,\n        \"created_at\": \"2025-04-13T10:12:03.759578Z\",\n        \"updated_at\": \"2025-04-13T10:12:03.759578Z\"\n    },\n    {\n        \"id\": 3992,\n        \"latest_alert\": {\n            \"id\": 1169,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:05.896847Z\",\n            \"patient\": 3992\n        },\n        \"name\": \"Mia Hayes\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 84,\n        \"weight\": 85.7,\n        \"gender\": \"F\",\n        \"platelets\": 129.5,\n        \"spo2\": 95.25,\n        \"creatinine\": 1.95,\n        \"hematocrit\": 40.38059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 85.5,\n        \"calcium\": 8.8,\n        \"wbc\": 22.33333333333333,\n        \"glucose\": 137.04628453889646,\n        \"inr\": 1,\n        \"potassium\": 4.337515106979287,\n        \"sodium\": 138.2340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:05.862061Z\",\n        \"updated_at\": \"2025-04-13T10:12:05.862061Z\"\n    },\n    {\n        \"id\": 3993,\n        \"latest_alert\": {\n            \"id\": 1170,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:08.009194Z\",\n            \"patient\": 3993\n        },\n        \"name\": \"Frankie Silva\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 61,\n        \"weight\": 91.7,\n        \"gender\": \"F\",\n        \"platelets\": 196,\n        \"spo2\": 94.5,\n        \"creatinine\": 1.05,\n        \"hematocrit\": 37.96059199797962,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 75,\n        \"calcium\": 9.5,\n        \"wbc\": 21.1,\n        \"glucose\": 139.24628453889645,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.362515106979287,\n        \"sodium\": 139.8340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:07.978036Z\",\n        \"updated_at\": \"2025-04-13T10:12:07.978036Z\"\n    },\n    {\n        \"id\": 3994,\n        \"latest_alert\": {\n            \"id\": 1171,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:10.104445Z\",\n            \"patient\": 3994\n        },\n        \"name\": \"Jonathan Hanna\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 62,\n        \"weight\": 97,\n        \"gender\": \"M\",\n        \"platelets\": 126.5,\n        \"spo2\": 95.5,\n        \"creatinine\": 1.3,\n        \"hematocrit\": 38.66059199797964,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 91,\n        \"calcium\": 9.1,\n        \"wbc\": 6.866666666666667,\n        \"glucose\": 117.04628453889646,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.062515106979286,\n        \"sodium\": 139.2340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:10.085637Z\",\n        \"updated_at\": \"2025-04-13T10:12:10.085637Z\"\n    },\n    {\n        \"id\": 3995,\n        \"latest_alert\": {\n            \"id\": 1172,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:12.212720Z\",\n            \"patient\": 3995\n        },\n        \"name\": \"Terry Lewis\",\n        \"admission_date\": \"2022-01-03T00:00:00Z\",\n        \"age\": 50,\n        \"weight\": 127,\n        \"gender\": \"F\",\n        \"platelets\": 164,\n        \"spo2\": 98,\n        \"creatinine\": 0.94,\n        \"hematocrit\": 34.24059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 93.75,\n        \"calcium\": 7.2,\n        \"wbc\": 14,\n        \"glucose\": 127.64628453889644,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 3.912515106979287,\n        \"sodium\": 136.2340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:12.184226Z\",\n        \"updated_at\": \"2025-04-13T10:12:12.184226Z\"\n    },\n    {\n        \"id\": 3996,\n        \"latest_alert\": {\n            \"id\": 1173,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:14.302191Z\",\n            \"patient\": 3996\n        },\n        \"name\": \"Walter Lee\",\n        \"admission_date\": \"2022-01-04T00:00:00Z\",\n        \"age\": 63.9949550853591,\n        \"weight\": 49.4,\n        \"gender\": \"M\",\n        \"platelets\": 201,\n        \"spo2\": 96.25,\n        \"creatinine\": 0.81,\n        \"hematocrit\": 35.44387835978835,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 95.5,\n        \"calcium\": 8.6,\n        \"wbc\": 9.3,\n        \"glucose\": 112.4,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 3.99099723108918,\n        \"sodium\": 135.56644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:14.270379Z\",\n        \"updated_at\": \"2025-04-13T10:12:14.270379Z\"\n    },\n    {\n        \"id\": 3997,\n        \"latest_alert\": {\n            \"id\": 1174,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:16.402529Z\",\n            \"patient\": 3997\n        },\n        \"name\": \"Bruce Mccoy\",\n        \"admission_date\": \"2022-01-04T00:00:00Z\",\n        \"age\": 26,\n        \"weight\": 85.7,\n        \"gender\": \"M\",\n        \"platelets\": 187,\n        \"spo2\": 98,\n        \"creatinine\": 1.2,\n        \"hematocrit\": 38.1,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 73.5,\n        \"calcium\": 8,\n        \"wbc\": 12.6,\n        \"glucose\": 98.4,\n        \"inr\": 1.2,\n        \"potassium\": 3.8,\n        \"sodium\": 142,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:16.366871Z\",\n        \"updated_at\": \"2025-04-13T10:12:16.366871Z\"\n    },\n    {\n        \"id\": 3998,\n        \"latest_alert\": {\n            \"id\": 1175,\n            \"prediction\": true,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:18.519681Z\",\n            \"patient\": 3998\n        },\n        \"name\": \"David Thompson\",\n        \"admission_date\": \"2022-01-04T00:00:00Z\",\n        \"age\": 72,\n        \"weight\": 100.3,\n        \"gender\": \"M\",\n        \"platelets\": 157,\n        \"spo2\": 94,\n        \"creatinine\": 1.98,\n        \"hematocrit\": 32.62059199797962,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 54,\n        \"calcium\": 8.15,\n        \"wbc\": 4.8,\n        \"glucose\": 267,\n        \"inr\": 1.1,\n        \"potassium\": 5.15,\n        \"sodium\": 137.8,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:18.487094Z\",\n        \"updated_at\": \"2025-04-13T10:12:18.487094Z\"\n    },\n    {\n        \"id\": 3999,\n        \"latest_alert\": {\n            \"id\": 1176,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:20.621130Z\",\n            \"patient\": 3999\n        },\n        \"name\": \"John Placencia\",\n        \"admission_date\": \"2022-01-04T00:00:00Z\",\n        \"age\": 64,\n        \"weight\": 104.1,\n        \"gender\": \"M\",\n        \"platelets\": 172,\n        \"spo2\": 96.75,\n        \"creatinine\": 1.38,\n        \"hematocrit\": 38.02059199797962,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 84,\n        \"calcium\": 8.5,\n        \"wbc\": 8,\n        \"glucose\": 126.64628453889644,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 3.862515106979287,\n        \"sodium\": 139.2340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:20.597427Z\",\n        \"updated_at\": \"2025-04-13T10:12:20.597427Z\"\n    },\n    {\n        \"id\": 4000,\n        \"latest_alert\": {\n            \"id\": 1177,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:22.704452Z\",\n            \"patient\": 4000\n        },\n        \"name\": \"Monica Schultz\",\n        \"admission_date\": \"2022-01-04T00:00:00Z\",\n        \"age\": 72,\n        \"weight\": 113.3,\n        \"gender\": \"F\",\n        \"platelets\": 100,\n        \"spo2\": 88.5,\n        \"creatinine\": 1.58,\n        \"hematocrit\": 41.503878359788345,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 113,\n        \"calcium\": 8.6,\n        \"wbc\": 17.7,\n        \"glucose\": 284.16998397159523,\n        \"inr\": 4.9,\n        \"potassium\": 4.015997231089179,\n        \"sodium\": 140.36644395909858,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:22.677927Z\",\n        \"updated_at\": \"2025-04-13T10:12:22.677927Z\"\n    },\n    {\n        \"id\": 4001,\n        \"latest_alert\": {\n            \"id\": 1178,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:24.800084Z\",\n            \"patient\": 4001\n        },\n        \"name\": \"Deborah Williams\",\n        \"admission_date\": \"2022-01-04T00:00:00Z\",\n        \"age\": 77,\n        \"weight\": 46.3,\n        \"gender\": \"F\",\n        \"platelets\": 173,\n        \"spo2\": 96.5,\n        \"creatinine\": 1.06,\n        \"hematocrit\": 31.72387835978835,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 96.5,\n        \"calcium\": 8,\n        \"wbc\": 5.400000000000001,\n        \"glucose\": 123.56998397159518,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 4.09099723108918,\n        \"sodium\": 139.16644395909856,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:24.759472Z\",\n        \"updated_at\": \"2025-04-13T10:12:24.759472Z\"\n    },\n    {\n        \"id\": 4002,\n        \"latest_alert\": {\n            \"id\": 1179,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:26.915005Z\",\n            \"patient\": 4002\n        },\n        \"name\": \"Linda Williams\",\n        \"admission_date\": \"2022-01-04T00:00:00Z\",\n        \"age\": 57,\n        \"weight\": 105.6,\n        \"gender\": \"F\",\n        \"platelets\": 139,\n        \"spo2\": 97.25,\n        \"creatinine\": 1.85,\n        \"hematocrit\": 34.42059199797963,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 82.75,\n        \"calcium\": 7.2,\n        \"wbc\": 11.699999999999998,\n        \"glucose\": 144.6,\n        \"inr\": 1.5233330088238186,\n        \"potassium\": 4.737515106979287,\n        \"sodium\": 136.8340021398003,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:26.888195Z\",\n        \"updated_at\": \"2025-04-13T10:12:26.888195Z\"\n    },\n    {\n        \"id\": 4003,\n        \"latest_alert\": {\n            \"id\": 1180,\n            \"prediction\": true,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:29.016210Z\",\n            \"patient\": 4003\n        },\n        \"name\": \"Richard Tafolla\",\n        \"admission_date\": \"2022-01-04T00:00:00Z\",\n        \"age\": 64,\n        \"weight\": 103.2,\n        \"gender\": \"M\",\n        \"platelets\": 261,\n        \"spo2\": 95.75,\n        \"creatinine\": 1.05,\n        \"hematocrit\": 34.63423303031775,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 124,\n        \"calcium\": 8.45,\n        \"wbc\": 13.937898980794166,\n        \"glucose\": 307.8,\n        \"inr\": 1.496918863720753,\n        \"potassium\": 3.775,\n        \"sodium\": 140.4,\n        \"ethnicity\": 4,\n        \"created_at\": \"2025-04-13T10:12:28.991630Z\",\n        \"updated_at\": \"2025-04-13T10:12:28.991630Z\"\n    },\n    {\n        \"id\": 4004,\n        \"latest_alert\": {\n            \"id\": 1181,\n            \"prediction\": false,\n            \"confidence\": null,\n            \"is_correct\": true,\n            \"model_version\": \"1.1\",\n            \"created_at\": \"2025-04-13T10:12:31.107229Z\",\n            \"patient\": 4004\n        },\n        \"name\": \"Sarah Hobby\",\n        \"admission_date\": \"2022-01-04T00:00:00Z\",\n        \"age\": 35,\n        \"weight\": 80.4,\n        \"gender\": \"F\",\n        \"platelets\": 142,\n        \"spo2\": 96.25,\n        \"creatinine\": 0.9,\n        \"hematocrit\": 42.28,\n        \"aids\": 0,\n        \"lymphoma\": 0,\n        \"solid_tumor_with_metastasis\": 0,\n        \"heartrate\": 138,\n        \"calcium\": 8.45,\n        \"wbc\": 7.866666666666667,\n        \"glucose\": 144.8,\n        \"inr\": 1.5377885171991228,\n        \"potassium\": 4.05,\n        \"sodium\": 143.4,\n        \"ethnicity\": 1,\n        \"created_at\": \"2025-04-13T10:12:31.076332Z\",\n        \"updated_at\": \"2025-04-13T10:12:31.076332Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Patient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/patients/{{patientId}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patients",
+								"{{patientId}}",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Patient",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patients/{{patientId}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patients",
+										"{{patientId}}",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:04:33 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "661"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 369,\n    \"latest_alert\": {\n        \"id\": 1114,\n        \"prediction\": false,\n        \"confidence\": 0.8704343553011551,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T09:51:27.287561Z\",\n        \"patient\": 369\n    },\n    \"name\": \"Sean Haubrich\",\n    \"admission_date\": \"2022-01-10T00:00:00Z\",\n    \"age\": 18,\n    \"weight\": 72.5,\n    \"gender\": \"M\",\n    \"platelets\": 313,\n    \"spo2\": 98.0021493763632,\n    \"creatinine\": 0.7949999999999999,\n    \"hematocrit\": 34.54387835978835,\n    \"aids\": 0,\n    \"lymphoma\": 0,\n    \"solid_tumor_with_metastasis\": 0,\n    \"heartrate\": 76,\n    \"calcium\": 8.7,\n    \"wbc\": 7.5,\n    \"glucose\": 80,\n    \"inr\": 1.5377885171991228,\n    \"potassium\": 3.65,\n    \"sodium\": 139.4,\n    \"ethnicity\": 1,\n    \"created_at\": \"2025-04-13T09:51:27.281523Z\",\n    \"updated_at\": \"2025-04-13T09:51:27.281523Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Sync Patient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/patients/sync/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patients",
+								"sync",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sync Patient",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patients/sync/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patients",
+										"sync",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:10:55 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2555"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"patients\": [\n        {\n            \"id\": 1665,\n            \"name\": \"John Hill\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1126,\n                \"prediction\": false,\n                \"confidence\": 0.6275669589134868,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.633177Z\",\n                \"patient\": 1665\n            }\n        },\n        {\n            \"id\": 2423,\n            \"name\": \"Kirsten Dannis\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1127,\n                \"prediction\": true,\n                \"confidence\": 0.6865875574146647,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.652556Z\",\n                \"patient\": 2423\n            }\n        },\n        {\n            \"id\": 1210,\n            \"name\": \"Gregory Dubois\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1128,\n                \"prediction\": false,\n                \"confidence\": 0.870611683730651,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.670142Z\",\n                \"patient\": 1210\n            }\n        },\n        {\n            \"id\": 1545,\n            \"name\": \"Bennie Zymowski\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1129,\n                \"prediction\": false,\n                \"confidence\": 0.8278706222696335,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.689286Z\",\n                \"patient\": 1545\n            }\n        },\n        {\n            \"id\": 129,\n            \"name\": \"Kathryn Aubert\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1130,\n                \"prediction\": false,\n                \"confidence\": 0.8129681051663431,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.711342Z\",\n                \"patient\": 129\n            }\n        },\n        {\n            \"id\": 2305,\n            \"name\": \"Aaron Nicolas\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1131,\n                \"prediction\": false,\n                \"confidence\": 0.6691557741658599,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.734183Z\",\n                \"patient\": 2305\n            }\n        },\n        {\n            \"id\": 736,\n            \"name\": \"Roberta Lawrence\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1132,\n                \"prediction\": true,\n                \"confidence\": 0.8965637804540328,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.750035Z\",\n                \"patient\": 736\n            }\n        },\n        {\n            \"id\": 763,\n            \"name\": \"April Williams\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1133,\n                \"prediction\": false,\n                \"confidence\": 0.8152451868134716,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.779605Z\",\n                \"patient\": 763\n            }\n        },\n        {\n            \"id\": 282,\n            \"name\": \"Scott Sellers\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1134,\n                \"prediction\": false,\n                \"confidence\": 0.835797331087682,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.803828Z\",\n                \"patient\": 282\n            }\n        },\n        {\n            \"id\": 2546,\n            \"name\": \"Kenneth Brown\",\n            \"admission_date\": \"2022-01-01T00:00:00\",\n            \"latest_alert\": {\n                \"id\": 1135,\n                \"prediction\": false,\n                \"confidence\": 0.6298608193402516,\n                \"is_correct\": true,\n                \"model_version\": \"latest\",\n                \"created_at\": \"2025-04-13T10:10:55.812518Z\",\n                \"patient\": 2546\n            }\n        }\n    ],\n    \"total_synced\": 10\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Patient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/patients/{{patientId}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patients",
+								"{{patientId}}",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Patient",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/patients/{{patientId}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patients",
+										"{{patientId}}",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:11:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "69"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Patient 129 and all related alerts deleted successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Patient",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"age\": 46.0, \"weight\": 70}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/patients/{{patientId}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patients",
+								"{{patientId}}",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Patient",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"age\": 46.0, \"weight\": 70}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/patients/{{patientId}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"patients",
+										"{{patientId}}",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:12:51 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "658"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 282,\n    \"latest_alert\": {\n        \"id\": 1191,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:51.005263Z\",\n        \"patient\": 282\n    },\n    \"name\": \"Scott Sellers\",\n    \"admission_date\": \"2022-01-01T00:00:00Z\",\n    \"age\": 46,\n    \"weight\": 70,\n    \"gender\": \"M\",\n    \"platelets\": 216,\n    \"spo2\": 96.25,\n    \"creatinine\": 0.88,\n    \"hematocrit\": 33.94387835978835,\n    \"aids\": 0,\n    \"lymphoma\": 0,\n    \"solid_tumor_with_metastasis\": 0,\n    \"heartrate\": 84,\n    \"calcium\": 8.6,\n    \"wbc\": 5.1,\n    \"glucose\": 141.16998397159517,\n    \"inr\": 1.5377885171991228,\n    \"potassium\": 3.79099723108918,\n    \"sodium\": 136.16644395909856,\n    \"ethnicity\": 1,\n    \"created_at\": \"2025-04-13T10:10:55.779605Z\",\n    \"updated_at\": \"2025-04-13T10:12:50.972599Z\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Alerts",
+			"item": [
+				{
+					"name": "List Alerts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/alerts/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alerts",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Alerts",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/alerts/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"alerts",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:12:58 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, POST, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "11163"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1194,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:56.329291Z\",\n        \"patient\": 4016\n    },\n    {\n        \"id\": 1193,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:54.243162Z\",\n        \"patient\": 4015\n    },\n    {\n        \"id\": 1192,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:52.118837Z\",\n        \"patient\": 4014\n    },\n    {\n        \"id\": 1191,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:51.005263Z\",\n        \"patient\": 282\n    },\n    {\n        \"id\": 1190,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:50.021601Z\",\n        \"patient\": 4013\n    },\n    {\n        \"id\": 1189,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:47.930504Z\",\n        \"patient\": 4012\n    },\n    {\n        \"id\": 1188,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:45.844303Z\",\n        \"patient\": 4011\n    },\n    {\n        \"id\": 1187,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:43.731495Z\",\n        \"patient\": 4010\n    },\n    {\n        \"id\": 1186,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:41.640948Z\",\n        \"patient\": 4009\n    },\n    {\n        \"id\": 1185,\n        \"prediction\": true,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:39.529237Z\",\n        \"patient\": 4008\n    },\n    {\n        \"id\": 1184,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:37.413542Z\",\n        \"patient\": 4007\n    },\n    {\n        \"id\": 1183,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:35.350115Z\",\n        \"patient\": 4006\n    },\n    {\n        \"id\": 1182,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:33.253661Z\",\n        \"patient\": 4005\n    },\n    {\n        \"id\": 1181,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:31.107229Z\",\n        \"patient\": 4004\n    },\n    {\n        \"id\": 1180,\n        \"prediction\": true,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:29.016210Z\",\n        \"patient\": 4003\n    },\n    {\n        \"id\": 1179,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:26.915005Z\",\n        \"patient\": 4002\n    },\n    {\n        \"id\": 1178,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:24.800084Z\",\n        \"patient\": 4001\n    },\n    {\n        \"id\": 1177,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:22.704452Z\",\n        \"patient\": 4000\n    },\n    {\n        \"id\": 1176,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:20.621130Z\",\n        \"patient\": 3999\n    },\n    {\n        \"id\": 1175,\n        \"prediction\": true,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:18.519681Z\",\n        \"patient\": 3998\n    },\n    {\n        \"id\": 1174,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:16.402529Z\",\n        \"patient\": 3997\n    },\n    {\n        \"id\": 1173,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:14.302191Z\",\n        \"patient\": 3996\n    },\n    {\n        \"id\": 1172,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:12.212720Z\",\n        \"patient\": 3995\n    },\n    {\n        \"id\": 1171,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:10.104445Z\",\n        \"patient\": 3994\n    },\n    {\n        \"id\": 1170,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:08.009194Z\",\n        \"patient\": 3993\n    },\n    {\n        \"id\": 1169,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:05.896847Z\",\n        \"patient\": 3992\n    },\n    {\n        \"id\": 1168,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:03.783962Z\",\n        \"patient\": 3991\n    },\n    {\n        \"id\": 1167,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:12:01.676101Z\",\n        \"patient\": 3990\n    },\n    {\n        \"id\": 1166,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:59.561828Z\",\n        \"patient\": 3989\n    },\n    {\n        \"id\": 1165,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:57.465555Z\",\n        \"patient\": 3988\n    },\n    {\n        \"id\": 1164,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:55.376081Z\",\n        \"patient\": 3987\n    },\n    {\n        \"id\": 1163,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:53.269705Z\",\n        \"patient\": 3986\n    },\n    {\n        \"id\": 1162,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:51.159202Z\",\n        \"patient\": 3985\n    },\n    {\n        \"id\": 1161,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:49.062147Z\",\n        \"patient\": 3984\n    },\n    {\n        \"id\": 1160,\n        \"prediction\": true,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:46.947202Z\",\n        \"patient\": 3983\n    },\n    {\n        \"id\": 1159,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:44.849577Z\",\n        \"patient\": 3982\n    },\n    {\n        \"id\": 1158,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:42.701279Z\",\n        \"patient\": 3981\n    },\n    {\n        \"id\": 1157,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:40.592465Z\",\n        \"patient\": 3980\n    },\n    {\n        \"id\": 1156,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:38.510885Z\",\n        \"patient\": 3979\n    },\n    {\n        \"id\": 1155,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:36.415427Z\",\n        \"patient\": 3978\n    },\n    {\n        \"id\": 1154,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:34.304641Z\",\n        \"patient\": 3977\n    },\n    {\n        \"id\": 1153,\n        \"prediction\": true,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:32.200053Z\",\n        \"patient\": 3976\n    },\n    {\n        \"id\": 1152,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:30.090192Z\",\n        \"patient\": 3975\n    },\n    {\n        \"id\": 1151,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:27.997647Z\",\n        \"patient\": 3974\n    },\n    {\n        \"id\": 1150,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:25.882675Z\",\n        \"patient\": 3973\n    },\n    {\n        \"id\": 1149,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:23.788204Z\",\n        \"patient\": 3972\n    },\n    {\n        \"id\": 1148,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:21.685978Z\",\n        \"patient\": 3971\n    },\n    {\n        \"id\": 1147,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:19.599850Z\",\n        \"patient\": 3970\n    },\n    {\n        \"id\": 1146,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:17.520833Z\",\n        \"patient\": 3969\n    },\n    {\n        \"id\": 1145,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:15.441728Z\",\n        \"patient\": 3968\n    },\n    {\n        \"id\": 1144,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:13.353401Z\",\n        \"patient\": 3967\n    },\n    {\n        \"id\": 1143,\n        \"prediction\": true,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:11.270942Z\",\n        \"patient\": 3966\n    },\n    {\n        \"id\": 1142,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:09.167083Z\",\n        \"patient\": 3965\n    },\n    {\n        \"id\": 1141,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:07.095663Z\",\n        \"patient\": 3964\n    },\n    {\n        \"id\": 1140,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:05.002501Z\",\n        \"patient\": 3963\n    },\n    {\n        \"id\": 1139,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:02.932463Z\",\n        \"patient\": 3962\n    },\n    {\n        \"id\": 1138,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:11:00.873752Z\",\n        \"patient\": 3961\n    },\n    {\n        \"id\": 1137,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:10:58.790866Z\",\n        \"patient\": 3960\n    },\n    {\n        \"id\": 1136,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:10:56.717329Z\",\n        \"patient\": 3959\n    },\n    {\n        \"id\": 1135,\n        \"prediction\": false,\n        \"confidence\": 0.6298608193402516,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T10:10:55.812518Z\",\n        \"patient\": 2546\n    },\n    {\n        \"id\": 1134,\n        \"prediction\": false,\n        \"confidence\": 0.835797331087682,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T10:10:55.803828Z\",\n        \"patient\": 282\n    },\n    {\n        \"id\": 1133,\n        \"prediction\": false,\n        \"confidence\": 0.8152451868134716,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T10:10:55.779605Z\",\n        \"patient\": 763\n    },\n    {\n        \"id\": 1132,\n        \"prediction\": true,\n        \"confidence\": 0.8965637804540328,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T10:10:55.750035Z\",\n        \"patient\": 736\n    },\n    {\n        \"id\": 1131,\n        \"prediction\": false,\n        \"confidence\": 0.6691557741658599,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T10:10:55.734183Z\",\n        \"patient\": 2305\n    },\n    {\n        \"id\": 1129,\n        \"prediction\": false,\n        \"confidence\": 0.8278706222696335,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T10:10:55.689286Z\",\n        \"patient\": 1545\n    },\n    {\n        \"id\": 1128,\n        \"prediction\": false,\n        \"confidence\": 0.870611683730651,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T10:10:55.670142Z\",\n        \"patient\": 1210\n    },\n    {\n        \"id\": 1127,\n        \"prediction\": true,\n        \"confidence\": 0.6865875574146647,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T10:10:55.652556Z\",\n        \"patient\": 2423\n    },\n    {\n        \"id\": 1126,\n        \"prediction\": false,\n        \"confidence\": 0.6275669589134868,\n        \"is_correct\": true,\n        \"model_version\": \"latest\",\n        \"created_at\": \"2025-04-13T10:10:55.633177Z\",\n        \"patient\": 1665\n    },\n    {\n        \"id\": 1125,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:10:54.634469Z\",\n        \"patient\": 3958\n    },\n    {\n        \"id\": 1124,\n        \"prediction\": true,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:10:52.540919Z\",\n        \"patient\": 3957\n    },\n    {\n        \"id\": 1123,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:10:50.479833Z\",\n        \"patient\": 3956\n    },\n    {\n        \"id\": 1122,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:10:48.389601Z\",\n        \"patient\": 3955\n    },\n    {\n        \"id\": 1121,\n        \"prediction\": true,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:10:46.299505Z\",\n        \"patient\": 3954\n    },\n    {\n        \"id\": 1120,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:10:44.255463Z\",\n        \"patient\": 3953\n    },\n    {\n        \"id\": 1119,\n        \"prediction\": false,\n        \"confidence\": null,\n        \"is_correct\": true,\n        \"model_version\": \"1.1\",\n        \"created_at\": \"2025-04-13T10:10:42.173988Z\",\n        \"patient\": 3952\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Alert",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/alerts/{{alertId}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alerts",
+								"{{alertId}}",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Alert",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/alerts/{{alertId}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"alerts",
+										"{{alertId}}",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:13:14 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "146"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1194,\n    \"prediction\": false,\n    \"confidence\": null,\n    \"is_correct\": true,\n    \"model_version\": \"1.1\",\n    \"created_at\": \"2025-04-13T10:12:56.329291Z\",\n    \"patient\": 4016\n}"
+						}
+					]
+				},
+				{
+					"name": "Label Alert",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"is_correct\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/alerts/{{alertId}}/label/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alerts",
+								"{{alertId}}",
+								"label",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Label Alert",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"is_correct\": false\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/alerts/{{alertId}}/label/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"alerts",
+										"{{alertId}}",
+										"label",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:13:22 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "147"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1194,\n    \"prediction\": false,\n    \"confidence\": null,\n    \"is_correct\": false,\n    \"model_version\": \"1.1\",\n    \"created_at\": \"2025-04-13T10:12:56.329291Z\",\n    \"patient\": 4016\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Model Operations",
+			"item": [
+				{
+					"name": "Batch Prediction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"patient_ids\": [2]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/models/predict/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"models",
+								"predict",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Batch Prediction",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"patient_ids\": [282]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/models/predict/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"models",
+										"predict",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:13:53 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "99"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"predictions\": [\n        {\n            \"prediction\": 0,\n            \"confidence\": null\n        }\n    ],\n    \"model_version\": \"unknown\",\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Retrain Model",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/models/retrain/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"models",
+								"retrain",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Retrain Model",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/models/retrain/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"models",
+										"retrain",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:14:01 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "71"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Model retraining started in background\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Model Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/models/status/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"models",
+								"status",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Model Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/models/status/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"models",
+										"status",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 13 Apr 2025 10:14:06 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.9.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, Cookie"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "257"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"training\",\n    \"last_training_time\": \"2025-04-13T10:14:01.686181\",\n    \"error\": null,\n    \"metrics\": {\n        \"accuracy\": 0.8081765894605938,\n        \"precision\": 0.7859197654038198,\n        \"recall\": 0.8081765894605938,\n        \"f1_score\": 0.7892653894718832,\n        \"confusion_matrix\": [\n            [\n                4726,\n                347\n            ],\n            [\n                887,\n                473\n            ]\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "ML service predict",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"patients\": [\r\n    {\r\n      \"age\": 68.0,\r\n      \"weight\": 73.9,\r\n      \"gender_M\": 1,\r\n      \"platelets\": 233.0,\r\n      \"spo2\": 87.0,\r\n      \"creatinine\": 2.37,\r\n      \"hematocrit\": 30.160591997979623,\r\n      \"aids\": 0,\r\n      \"lymphoma\": 0,\r\n      \"solid_tumor_with_metastasis\": 0,\r\n      \"heartrate\": 104.5,\r\n      \"calcium\": 7.95,\r\n      \"wbc\": 14.1,\r\n      \"glucose\": 153.24628453889645,\r\n      \"inr\": 1.523330080228186,\r\n      \"potassium\": 3.962515106979287,\r\n      \"sodium\": 136.0340021398003,\r\n      \"ethnicity\": 1\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/predict",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"predict"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "ML service predict",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"patients\": [\r\n    {\r\n      \"age\": 68.0,\r\n      \"weight\": 73.9,\r\n      \"gender_M\": 1,\r\n      \"platelets\": 233.0,\r\n      \"spo2\": 87.0,\r\n      \"creatinine\": 2.37,\r\n      \"hematocrit\": 30.160591997979623,\r\n      \"aids\": 0,\r\n      \"lymphoma\": 0,\r\n      \"solid_tumor_with_metastasis\": 0,\r\n      \"heartrate\": 104.5,\r\n      \"calcium\": 7.95,\r\n      \"wbc\": 14.1,\r\n      \"glucose\": 153.24628453889645,\r\n      \"inr\": 1.523330080228186,\r\n      \"potassium\": 3.962515106979287,\r\n      \"sodium\": 136.0340021398003,\r\n      \"ethnicity\": 1\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/predict",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"predict"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Sun, 13 Apr 2025 10:14:12 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "36"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"predictions\": [\n        {\n            \"prediction\": 0\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "patientId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "alertId",
+			"value": "1",
+			"type": "string"
+		}
+	]
 }

@@ -1,36 +1,60 @@
 from rest_framework import serializers
 from .models import Patient, Alert
+from typing import List, Dict, Any
 
-class AlertSerializer(serializers.ModelSerializer):
-    patient_name = serializers.ReadOnlyField(source='patient.name')
-    
+class PredictionPatientSerializer(serializers.ModelSerializer):
+    gender_M = serializers.SerializerMethodField()
+
     class Meta:
-        model = Alert
-        fields = ['id', 'patient', 'patient_name', 'prediction', 'confidence', 'model_version', 'is_correct', 'created_at']
+        model = Patient
+        fields = [
+            'age',
+            'weight',
+            'gender_M',
+            'platelets',
+            'spo2',
+            'creatinine',
+            'hematocrit',
+            'aids',
+            'lymphoma',
+            'solid_tumor_with_metastasis',
+            'heartrate',
+            'calcium',
+            'wbc',
+            'glucose',
+            'inr',
+            'potassium',
+            'sodium',
+            'ethnicity'
+        ]
+
+    def get_gender_M(self, obj: Patient) -> int:
+        """Convert gender to binary format where M=1, others=0"""
+        return 1 if obj.gender == 'M' else 0
 
 class PatientSerializer(serializers.ModelSerializer):
     latest_alert = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Patient
         fields = '__all__'
-    
-    def get_latest_alert(self, obj):
-        """Get the latest alert for this patient"""
+        read_only_fields = ['created_at', 'updated_at']
+
+    def get_latest_alert(self, obj: Patient) -> Dict[str, Any]:
         try:
-            # Print for debugging
-            # print(f"Getting latest alert for patient {obj.id}")
-            # Use direct ORM query to find alerts for this patient
-            alerts = Alert.objects.filter(patient_id=obj.id).order_by('-created_at')
-            
-            if alerts.exists():
-                alert = alerts.first()
-                print(f"Found alert: {alert.id}")
-                serializer = AlertSerializer(alert)
-                return serializer.data
-            else:
-                print(f"No alerts found for patient {obj.id}")
-                return None
-        except Exception as e:
-            print(f"Error getting latest alert: {str(e)}")
+            alert = Alert.objects.filter(patient_id=obj.id).latest('created_at')
+            return AlertSerializer(alert).data
+        except Alert.DoesNotExist:
             return None
+
+    def to_representation(self, instance: Patient) -> Dict[str, Any]:
+        """Convert patient to dictionary format for prediction"""
+        ret = super().to_representation(instance)
+        # ret['prediction_data'] = PredictionPatientSerializer(instance).data
+        return ret
+
+class AlertSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Alert
+        fields = '__all__'
+        read_only_fields = ['created_at']

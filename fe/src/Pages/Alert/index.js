@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Layout, Row, Col, message, Button, List, Card, Popconfirm, Progress, Space } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Row, Col, Button, message, List, Card, Popconfirm, Progress, Space, Modal } from 'antd';
 import Header from '../../Layouts/Header';
 import { Link } from 'react-router-dom';
 import AlertAPI from '../../API/Services/Alert';
@@ -19,6 +19,7 @@ const AlertHistory = (props) => {
     const [alerts, setAlerts] = useState([]);
     const [model, setModel] = useState(null);
     const [getAlertDone, setGetAlertDone] = useState(false);
+    const [showAllAlerts, setShowAllAlerts] = useState(false);
 
     useEffect(() => {
         AlertAPI.get().then(
@@ -41,14 +42,20 @@ const AlertHistory = (props) => {
         })
     }, []);
 
-    const onMarkAsFalsePositive = (alert_id) => {
+    const handleShowAllToggle = () => {
+        setShowAllAlerts(!showAllAlerts);
+    };
+
+    const filteredAlerts = showAllAlerts ? alerts : alerts.filter(alert => alert.prediction);
+
+    const onMarkAsFalsePrediction = (alert_id) => {
         AlertAPI.mark_as_false_positive(alert_id).then(
             (response) => {
                 message.success(response.data.message);
             }
         ).catch((error) => {
             console.log(error);
-            message.error('Error while marking alert as false positive');
+            message.error('Error while marking alert as false prediction');
         })
     }
 
@@ -78,6 +85,13 @@ const AlertHistory = (props) => {
                                 }
                             })(model?.status)
                         }
+                        <Button
+                            type="primary"
+                            onClick={handleShowAllToggle}
+                            style={{ marginRight: '10px' }}
+                        >
+                            {showAllAlerts ? 'Show Predicted Only' : 'Show All Alerts'}
+                        </Button>
                     </Space>
                 </Col>
             </Row>
@@ -89,7 +103,7 @@ const AlertHistory = (props) => {
                     },
                     pageSize: 3,
                 }}
-                dataSource={alerts}
+                dataSource={filteredAlerts}
                 renderItem={(item, index) => (
                     <List.Item>
                         <Card style={{ width: '100%', textAlign: 'left' }}>
@@ -104,17 +118,16 @@ const AlertHistory = (props) => {
                                 (() => {
                                     if (item?.is_correct === null) {
                                         return <Popconfirm
-                                            title="Mark as false positive"
-                                            description="Are you sure to mark this alert as false positive?"
-                                            onConfirm={() => onMarkAsFalsePositive(item.id)}
+                                            title="Mark as false prediction"
+                                            description="Are you sure to mark this alert as false prediction?"
+                                            onConfirm={() => onMarkAsFalsePrediction(item.id)}
                                             okText="Yes"
                                             cancelText="No"
                                         >
-                                            <Button style={{ float: 'right' }} danger>Mark as false positive</Button>
-                                        </Popconfirm>
-                                    } else {
-                                        return <Button type='primary' style={{ float: 'right' }} danger> False positive alert </Button>
+                                            <Button style={{ float: 'right' }} danger>Mark as False Prediction</Button>
+                                        </Popconfirm>;
                                     }
+                                    return null;
                                 })()
                             }
                         </Card>

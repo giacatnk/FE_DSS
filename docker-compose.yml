@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+  # Frontend dependency stage
+  fe-deps:
+    build:
+      context: ./fe
+      dockerfile: Dockerfile
+      target: deps
+    image: aceso-fe-deps:latest
+
   frontend:
     build:
       context: ./fe
@@ -14,14 +22,26 @@ services:
     environment:
       - NODE_ENV=development
     depends_on:
+      - fe-deps
       - backend
     networks:
       - app-network
+
+  # Backend dependency stage - this will be cached
+  be-deps:
+    build:
+      context: ./be
+      dockerfile: Dockerfile
+      target: runtime-deps
+    image: aceso-be-deps:latest  # Important: fixed tag for caching
 
   backend:
     build:
       context: ./be
       dockerfile: Dockerfile
+      target: final
+      cache_from:  # Use cached deps
+        - aceso-be-deps:latest
     ports:
       - "8000:8000"
     volumes:
@@ -30,9 +50,13 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - DJANGO_SETTINGS_MODULE=config.settings
-      - ML_API_URL=http://ml:8080
+      - ML_API_URL=http://ml:8000
     depends_on:
+      - be-deps
       - ml
+      - source_db
+    networks:
+      - app-network
 
   ml:
       build:
@@ -48,6 +72,22 @@ services:
       networks:
         - app-network
 
+  source_db:
+    image: postgres:15
+    volumes:
+      - source_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"  # Expose the API server
+    environment:
+      - POSTGRES_DB=source_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  source_db_data:
