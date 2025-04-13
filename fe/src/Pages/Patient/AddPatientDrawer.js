@@ -43,7 +43,8 @@ const AddPatientDrawer = (props) => {
                     .then(response => {
                         message.success('Import completed successfully');
                         // Refresh the patient list
-                        queryClient.invalidateQueries(['patients']);
+                        // queryClient.invalidateQueries(['patients']);
+                        // TODO update the patient list
                     })
                     .catch(error => {
                         message.error('Import failed: ' + error.message);
