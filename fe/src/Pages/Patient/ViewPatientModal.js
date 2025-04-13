@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Descriptions, Modal } from 'antd';
 import PatientAPI from '../../API/Services/Patient';
 import criteria_metadata from '../../Utils/criteria_metadata';
@@ -11,25 +11,21 @@ const ViewPatientModal = (props) => {
   const onOpen = () => {
     setOpen(true);
     setLoading(true);
-  };
-
-  useEffect(() => {
+    
     PatientAPI.get_by_id(props.patient_id)
-      .then((response) => {
-        const patient = response.data.patient;
+      .then((patient) => {
         setPatient(patient);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  })
+  };
+
   return (
     <>
       <Button type="primary" onClick={onOpen}>
-        View Details 
+        View Details
       </Button>
       <Modal
         title={<p>Patient {props.patient_id} info </p>}
@@ -54,7 +50,7 @@ const ViewPatientModal = (props) => {
                   {
                     (() => {
                       if (criteria.type === "boolean") {
-                        return patient[criteria.name] ? "True" : "False";
+                        return patient[criteria.name] === 1 ? "True" : "False";
                       } else if (criteria.type === "enum") {
                         return criteria.values[patient[criteria.name]];
                       } else {

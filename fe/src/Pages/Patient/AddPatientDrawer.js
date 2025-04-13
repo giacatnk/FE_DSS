@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { MinusCircleOutlined, PlusCircleFilled, PlusOutlined, ImportOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { PlusCircleFilled, ImportOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Modal, Row, Select, Space, message } from 'antd';
+import PatientAPI from '../../API/Services/Patient';
 
 const AddPatientDrawer = (props) => {
     const [open, setOpen] = useState(false);
@@ -17,7 +18,8 @@ const AddPatientDrawer = (props) => {
     };
 
     const onSubmitForm = () => {
-        // TODO: Add API Create Patient
+        setConfirmLoading(true);
+
         console.log("Form submitted");
         const fields = form.getFieldsValue();
         let data = {}
@@ -29,19 +31,31 @@ const AddPatientDrawer = (props) => {
             }
         }
         console.log(data);
+
+        PatientAPI.create(data).then((response) => {
+            message.success("Patient created successfully");
+            setConfirmLoading(false);
+            form.resetFields();
+            setOpen(false);
+        }
+        ).catch((error) => {
+            console.error(error);
+            message.error("Error creating patient");
+            setConfirmLoading(false);
+        });
     }
 
     const handleImport = () => {
         Modal.confirm({
-            title: 'Confirm Import',
-            content: 'This will import new patients from the source database. Are you sure you want to proceed?',
-            okText: 'Import',
+            title: 'Confirm sync',
+            content: 'This will sync new patients from the source database. Are you sure you want to proceed?',
+            okText: 'Sync',
             cancelText: 'Cancel',
             onOk: () => {
                 // Call the sync endpoint
                 patientApi.sync()
                     .then(response => {
-                        message.success('Import completed successfully');
+                        message.success('Sync completed successfully');
                         // Refresh the patient list
                         // queryClient.invalidateQueries(['patients']);
                         // TODO update the patient list
@@ -63,7 +77,7 @@ const AddPatientDrawer = (props) => {
                     Add
                 </Button>
                 <Button className='custom-button' type="primary" icon={<ImportOutlined />} onClick={handleImport} style={{ marginBottom: '10px', float: 'right' }}>
-                    Import
+                    Sync
                 </Button>
             </Space>
             <Drawer
@@ -118,8 +132,8 @@ const AddPatientDrawer = (props) => {
                             >
                                 <Select 
                                     options={[
-                                        {value: "male", label: "Male"},
-                                        {value: "female", label: "Female"}
+                                        {value: "M", label: "Male"},
+                                        {value: "F", label: "Female"}
                                     ]}
                                     placeholder="Choose a gender"
                                 />
@@ -159,8 +173,8 @@ const AddPatientDrawer = (props) => {
                             <Form.Item name="aids" label="AIDS">
                                 <Select 
                                     options={[
-                                        {value: true, label: "True"},
-                                        {value: false, label: "False"}
+                                        {value: 1, label: "True"},
+                                        {value: 0, label: "False"}
                                     ]}
                                     placeholder="Choose a boolean value"
                                     allowClear
@@ -171,8 +185,8 @@ const AddPatientDrawer = (props) => {
                             <Form.Item name="limphoma" label="Lymphoma">
                                 <Select 
                                     options={[
-                                        {value: true, label: "True"},
-                                        {value: false, label: "False"}
+                                        {value: 1, label: "True"},
+                                        {value: 0, label: "False"}
                                     ]}
                                     placeholder="Choose a boolean value"
                                     allowClear
@@ -183,8 +197,8 @@ const AddPatientDrawer = (props) => {
                             <Form.Item name="solid_tumor_with_metastasis" label="Solid Tumor with Metastasis">
                                 <Select 
                                     options={[
-                                        {value: true, label: "True"},
-                                        {value: false, label: "False"}
+                                        {value: 1, label: "True"},
+                                        {value: 0, label: "False"}
                                     ]}
                                     placeholder="Choose a boolean value"
                                     allowClear

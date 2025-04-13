@@ -22,17 +22,18 @@ const Patient = (props) => {
     const onDeletePatient = (patient_id) => {
         PatientAPI.delete_by_id(patient_id)
         .then((response) => {
-            message.success(response.data.message);
+            message.success(response.message);
             setpatients(patients.filter((patient) => patient.id !== patient_id));
         }).catch(err => {
-            message.error(err.response.data.error);
+            message.error("Unexpected error occurred");
+            console.error(err);
         })
     };
 
     useEffect(() => {
         PatientAPI.get()
-            .then((response) => {
-                const patients = response.data.patients;
+            .then((patients) => {
+                console.log(patients);
                 setpatients(patients.map((patient) => ({
                     key: patient.id,
                     id: patient.id,
@@ -43,7 +44,7 @@ const Patient = (props) => {
                 })))
                 setGetpatientDone(true);
             }).catch(err => {
-                message.error(err.response.data.error);
+                message.error(err.response.detail);
             })
     }, [triggerGetpatient])
 

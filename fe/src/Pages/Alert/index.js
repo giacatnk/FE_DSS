@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Row, Col, Button, message, List, Card, Popconfirm, Progress, Space, Modal } from 'antd';
+import { Layout, Row, Col, Button, message, List, Card, Popconfirm, Progress, Space } from 'antd';
 import Header from '../../Layouts/Header';
 import { Link } from 'react-router-dom';
 import AlertAPI from '../../API/Services/Alert';
@@ -18,13 +18,36 @@ const contentStyle = {
 const AlertHistory = (props) => {
     const [alerts, setAlerts] = useState([]);
     const [model, setModel] = useState(null);
-    const [getAlertDone, setGetAlertDone] = useState(false);
+    const [, setGetAlertDone] = useState(false);
     const [showAllAlerts, setShowAllAlerts] = useState(false);
+
+    const handleShowAllToggle = () => {
+        setShowAllAlerts(!showAllAlerts);
+    };
+    const filteredAlerts = showAllAlerts ? alerts : alerts.filter(alert => alert.prediction);
+
+    const intervalPoolingModelUntilCompleted = () => {
+        setTimeout(() => {
+            ModelAPI.get().then(
+                (model) => {
+                    setModel(model);
+                    if (model.status === "training") {
+                        intervalPoolingModelUntilCompleted();
+                    } else {
+                        message.success('Model training completed');
+                    }
+                }
+            ).catch((error) => {
+                console.log(error);
+                message.error('Error while getting model');
+            })
+        }, 500)
+    }
 
     useEffect(() => {
         AlertAPI.get().then(
-            (response) => {
-                setAlerts(response.data.alerts);
+            (alerts) => {
+                setAlerts(alerts);
                 setGetAlertDone(true);
             }
         ).catch((error) => {
@@ -33,8 +56,11 @@ const AlertHistory = (props) => {
         })
 
         ModelAPI.get().then(
-            (response) => {
-                setModel(response.data.model);
+            (model) => {
+                setModel(model);
+                if (model.status === "training") {
+                    intervalPoolingModelUntilCompleted();
+                }
             }
         ).catch((error) => {
             console.log(error);
@@ -42,11 +68,18 @@ const AlertHistory = (props) => {
         })
     }, []);
 
-    const handleShowAllToggle = () => {
-        setShowAllAlerts(!showAllAlerts);
-    };
-
-    const filteredAlerts = showAllAlerts ? alerts : alerts.filter(alert => alert.prediction);
+    const onUpdateModel = () => {
+        setModel({ ...model, status: "training" });
+        ModelAPI.update().then(
+            (response) => {
+                message.success(response.data.message);
+                intervalPoolingModelUntilCompleted();
+            }
+        ).catch((error) => {
+            console.log(error);
+            message.error('Error while updating model');
+        })
+    }
 
     const onMarkAsFalsePrediction = (alert_id) => {
         AlertAPI.mark_as_false_positive(alert_id).then(
@@ -77,7 +110,7 @@ const AlertHistory = (props) => {
                                         Training
                                     </Button>
                                 } else {
-                                    return <><Button type="primary" >
+                                    return <><Button type="primary" onClick={onUpdateModel}>
                                         Update Model
                                     </Button>
                                         <ModelInfoModal model={model} />
@@ -109,11 +142,12 @@ const AlertHistory = (props) => {
                         <Card style={{ width: '100%', textAlign: 'left' }}>
                             <Meta description={item?.created_at} />
                             <h3>
-                                Patient "{item?.patient_name}" <Link to={`/patients/${item?.patient_id}`}>#{item?.patient_id}</Link> is having symptoms of Diabetes
+                                Patient <Link to={`/patients/${item?.patient}`}>#{item?.patient}</Link> is having symptoms of Diabetes
                             </h3>
-                            <p>
+                            
+                            {item.confidence ? <p>
                                 Confidence <Progress percent={Math.round(item.confidence * 10000) / 100} percentPosition={{ align: 'center', type: 'inner' }} size={[300, 20]} />
-                            </p>
+                            </p>: null}
                             {
                                 (() => {
                                     if (item?.is_correct === null) {

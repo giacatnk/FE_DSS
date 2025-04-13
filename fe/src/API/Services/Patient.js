@@ -1,45 +1,65 @@
 import instance from '../axios';
-import patients from '../MockData/patients';
 
 const PatientAPI = {
     get: (page = 1, size = 30) => {
-        // GET/patients/?page=202&offset=10
-        return Promise.resolve({
-            data: { patients: patients },
-        })
+        return instance.get(`/patients/?page=${page}&size=${size}`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                console.error('Error fetching patients:', error);
+                throw error;
+            });
     },
     get_by_id: (id) => {
-        // GET {{baseUrl}}/patients/2013/
-        return Promise.resolve({
-            data: { patient: patients.find((patient) => patient.id == id) },
-        })
+        return instance.get(`/patients/${id}/`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                console.error('Error fetching patient by ID:', error);
+                throw error;
+            });
     },
     delete_by_id: (id) => {
-        // DELETE {{baseUrl}}/patients/2010/
-        return Promise.resolve({
-            data: { message: "Deleted successfully" },
-        })
+        return instance.delete(`/patients/${id}/`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                console.error('Error deleting patient:', error);
+                throw error;
+            });
     },
     update_by_id: (id, data) => {
-        // PATCH {{baseUrl}}/patients/2013/
-        // body {patient info, only updated fields}
-        return Promise.resolve({
-            data: { message: "Updated successfully" },
-        })
+        return instance.put(`/patients/${id}/`, data)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                console.error('Error updating patient:', error);
+                throw error;
+            });
     },
     create: (data) => {
-        //POST {{baseUrl}}/patients/
-        // body {patient info}
-        return Promise.resolve({
-            data: { message: "Created successfully" },
-        })
+        return instance.post('/patients/', data)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                console.error('Error creating patient:', error);
+                throw error;
+            });
     },
     sync: () => {
-        // POST {{baseUrl}}/patients/sync/
-        return Promise.resolve({
-            data: { patients: patients },
-            message: "Sync completed successfully",
-        })
+        return instance.post('/patients/sync/')
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                console.error('Error syncing patients:', error);
+                throw error;
+            });
     }
 }
 export default PatientAPI;

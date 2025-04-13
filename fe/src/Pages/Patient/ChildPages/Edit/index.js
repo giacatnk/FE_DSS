@@ -1,7 +1,7 @@
 import React, {useEffect, useState}  from 'react';
-import { Layout, Table, Row, Col, Form, Input, Select, DatePicker, Button } from 'antd';
+import { Layout, Table, Row, Col, Form, Input, Select, DatePicker, Button, message } from 'antd';
 import Header from '../../../../Layouts/Header';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PatientAPI from '../../../../API/Services/Patient';
 import dayjs from 'dayjs';
 import criteria_metadata from '../../../../Utils/criteria_metadata';
@@ -17,38 +17,59 @@ const EditPatient = (props) => {
     const [form] = Form.useForm();
     const [confirmLoading, setConfirmLoading] = useState(false);
     const params = useParams();
+    const navigate = useNavigate();
 
     const onSubmitForm = () => {
-        // TODO: Add API Create Patient
-        console.log("Form submitted");
+        setConfirmLoading(true);
         const fields = form.getFieldsValue();
         let data = {}
-        for (const key in fields) {
-            if (key === "date_of_birth") {
-                data[key] = fields[key].format("YYYY-MM-DD");
-            } else if (fields[key] !== undefined) {
-                data[key] = fields[key];
+
+        if (fields.date_of_birth) {
+            data.date_of_birth = fields.date_of_birth.format("YYYY-MM-DD");
+        }
+        for (const criteria of criteria_metadata) {
+            if (fields[criteria.name] != undefined) {
+                if (criteria.type === "boolean") {
+                    data[criteria.name] = fields[criteria.name] === true ? 1 : 0;
+                } else if (criteria.type === "enum") {
+                    for (const key in criteria.values) {
+                        if (criteria.values[key] === fields[criteria.name]) {
+                            data[criteria.name] = key;
+                            break;
+                        }
+                    }
+                } else {
+                    data[criteria.name] = fields[criteria.name];
+                }
             }
         }
-        console.log(data);
+        console.log(`Data sent to server`, data);
+        PatientAPI.update_by_id(params.id, data).then((patient) => {
+            setConfirmLoading(false);
+            message.success(`Patient ${patient.id} updated successfully`);
+            navigate(`/patients`);
+        }).catch((err) => {
+            message.error("Unexpected error occurred");
+            setConfirmLoading(false);
+            console.error(err);
+        })
     }
 
     useEffect(() => {
-        PatientAPI.get_by_id(params.id).then((res) => {
-            const patient = res.data.patient;
+        PatientAPI.get_by_id(params.id).then((patient) => {
             if (patient.date_of_birth) {
                 patient.date_of_birth = dayjs(patient.date_of_birth);
             }
-
-            for (const key in criteria_metadata) {
-                if (patient[criteria_metadata[key].name] === undefined) {
-                    patient[criteria_metadata[key].name] = null;
-                }
-                if (criteria_metadata[key].type === "boolean") {
-                    patient[criteria_metadata[key].name] = Boolean(patient[criteria_metadata[key].name]);
+            
+            for (const criteria of criteria_metadata) {
+                if (patient[criteria.name] != null) {
+                    if (criteria.type === "boolean") {
+                        patient[criteria.name] = patient[criteria.name] === 1 ? true : false;
+                    } else if (criteria.type === "enum") {
+                        patient[criteria.name] = criteria.values[patient[criteria.name]];
+                    }
                 }
             }
-            console.log(patient);
             form.setFieldsValue(patient);
     })}, [params.id, form]);
     
@@ -91,15 +112,14 @@ const EditPatient = (props) => {
                                             message: "Patient name must not contain character in ' ,;{}()\n\t=#-.|'"
                                         }]}
                                 >
-                                    <Input placeholder='Fill a name'/>
+                                    <Input disabled/>
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item
                                     name="date_of_birth" label="Date of Birth"
-                                    rules={[{ required: true, message: "Please fill patient's date of birth" }]}
                                 >
-                                    <DatePicker style={{ width: '100%' }} placeholder="Select date of birth" />
+                                    <DatePicker style={{ width: '100%' }} placeholder="Select date of birth" disabled />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
@@ -108,9 +128,10 @@ const EditPatient = (props) => {
                                     rules={[{ required: true, message: "Please fill patient's gender" }]}
                                 >
                                     <Select 
+                                        disabled
                                         options={[
-                                            {value: "male", label: "Male"},
-                                            {value: "female", label: "Female"}
+                                            {value: "M", label: "Male"},
+                                            {value: "F", label: "Female"}
                                         ]}
                                         placeholder="Choose a gender"
                                         style={{ textAlign: 'left' }}

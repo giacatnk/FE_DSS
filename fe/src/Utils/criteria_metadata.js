@@ -1,5 +1,5 @@
 const criteria_metadata = [
-    { name: "gender", label: "Gender" },
+    { name: "gender", label: "Gender", type: "enum", values: {"M": "Male", "F": "Female"} },
     { name: "age", label: "Age" },
     { name: "weight", label: "Weight" },
     { name: "platelets", label: "Platelets" },
@@ -16,7 +16,7 @@ const criteria_metadata = [
     { name: "inr", label: "INR" },
     { name: "potassium", label: "Potassium" },
     { name: "sodium", label: "Sodium" },
-    { name: "ethnicity", label: "Ethnicity", type: "enum", values: {"1": "White", "2": "Black", "3": "Asian", "4": "Latino", "5": "Others"} },
+    { name: "ethnicity", label: "Ethnicity", type: "enum", values: {1: "White", 2: "Black", 3: "Asian", 4: "Latino", 5: "Others"} },
 ]
 
 export default criteria_metadata;

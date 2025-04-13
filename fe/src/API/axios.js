@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { API_URL } from '../Configs';
 
 const instance = axios.create({
-    baseURL: `/api`
+    baseURL: API_URL,
 })
 
 instance.defaults.headers.common['Content-Type'] = 'application/json';
