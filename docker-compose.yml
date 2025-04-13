@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./fe
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./fe/src:/app/src
+      - ./fe/public:/app/public
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./be
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./be:/app
+      - ./be/data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SETTINGS_MODULE=config.settings
+      - ML_API_URL=http://ml:8080
+    depends_on:
+      - ml
+
+  ml:
+      build:
+        context: ./ml
+        dockerfile: Dockerfile
+      ports:
+        - "8080:8000"  # Expose the API server
+      volumes:
+        - ./ml/data:/app/data
+      #   - ./ml/models:/app/models
+      environment:
+        - PYTHONUNBUFFERED=1
+      networks:
+        - app-network
+
+networks:
+  app-network:
+    driver: bridge
