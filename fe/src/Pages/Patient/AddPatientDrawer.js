@@ -2,32 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { MinusCircleOutlined, PlusCircleFilled, PlusOutlined, ImportOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
 
-
-const criteria_metadata = [
-    { name: "age", label: "Age", type: "integer" },
-    { name: "weight", label: "Weight", type: "float" },
-    { name: "gender", label: "Gender", type: "select", values: [{ value: "male", label: "Male" }, { value: "female", label: "Female" }] },
-    { name: "platelets", label: "Platelets", type: "float" },
-    { name: "spo2", label: "SpO2", type: "float" },
-    { name: "creatinine", label: "Creatinine", type: "float" },
-    { name: "hematocrit", label: "Hematocrit", type: "float" },
-    { name: "aids", label: "AIDS", type: "boolean" },
-    { name: "limphoma", label: "Lymphoma", type: "boolean" },
-    { name: "solid_tumor_with_metastasis", label: "Solid Tumor with Metastasis", type: "boolean" },
-    { name: "heart_rate", label: "Heart Rate", type: "float" },
-    { name: "calcium", label: "Calcium", type: "float" },
-    { name: "wbc", label: "WBC", type: "float" },
-    { name: "glucose", label: "Glucose", type: "float" },
-    { name: "inr", label: "INR", type: "float" },
-    { name: "potassium", label: "Potassium", type: "float" },
-    { name: "sodium", label: "Sodium", type: "float" },
-    { name: "ethicity", label: "Ethicity", type: "select", values: [{ value: "white", label: "White" }, { value: "black", label: "Black" }, { value: "hispanic", label: "Hispanic" }, { value: "asian", label: "Asian" }] },
-]
-
 const AddPatientDrawer = (props) => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
-    const [form] = Form.useForm()
+    const [form] = Form.useForm();
 
     const showDrawer = () => {
         setOpen(true);
@@ -40,7 +18,16 @@ const AddPatientDrawer = (props) => {
     const onSubmitForm = () => {
         // TODO: Add API Create Patient
         console.log("Form submitted");
-        console.log(form.getFieldsValue());
+        const fields = form.getFieldsValue();
+        let data = {}
+        for (const key in fields) {
+            if (key === "date_of_birth") {
+                data[key] = fields[key].format("YYYY-MM-DD");
+            } else if (fields[key] !== undefined) {
+                data[key] = fields[key];
+            }
+        }
+        console.log(data);
     }
 
     return (
@@ -60,7 +47,7 @@ const AddPatientDrawer = (props) => {
                 extra={
                     <Space>
                         <Button className='custom-ghost-button' onClick={onClose}>Cancel</Button>
-                        <Button 
+                        <Button
                             className='custom-button' 
                             onClick={() => { form.submit() }} 
                             type="primary"
@@ -74,7 +61,7 @@ const AddPatientDrawer = (props) => {
             >
                 <Form layout="vertical" form={form} autoComplete='off' onFinish={onSubmitForm}>
                     <Row gutter={16}>
-                        <Col span={12}>
+                        <Col span={24}>
                             <Form.Item
                                 name="name" label="Name"
                                 rules={[
@@ -83,11 +70,11 @@ const AddPatientDrawer = (props) => {
                                         message: 'Please enter patient name'
                                     },
                                     {
-                                        pattern: RegExp(/^[^\s,;{}()\n\t=#-.|]+$/),
-                                        message: "Patient name must not contain character in ' ,;{}()\n\t=#-.|'"
+                                        pattern: RegExp(/^[^,;{}()\n\t=#-.|]+$/),
+                                        message: "Patient name must not contain character in ',;{}()\n\t=#-.|'"
                                     }]}
                             >
-                                <Input />
+                                <Input placeholder='Fill a name'/>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -98,60 +85,135 @@ const AddPatientDrawer = (props) => {
                                 <DatePicker style={{ width: '100%' }} placeholder="Select date of birth" />
                             </Form.Item>
                         </Col>
-                        <Col span={24}>
-                            <Form.List name="criterias">
-                                {(fields, { add, remove }) => (
-                                    <>
-                                        {fields.map(({ key, name, ...restField }) => (
-                                            <div key={key}>
-                                                <Row gutter={32}>
-                                                    <Col span={24}> Criteria {key + 1} </Col>
-                                                    <Col span={11}>
-                                                        <Form.Item colon={false} {...restField} name={[name, 'name']}
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: 'Please fill criteria name',
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Select
-                                                                placeholder="Name"
-                                                                options={
-                                                                    criteria_metadata.map((item) => ({
-                                                                        value: item.name,
-                                                                        label: item.label,
-                                                                    }))
-                                                                }
-                                                            />
-                                                        </Form.Item>
-                                                    </Col>
-                                                    <Col span={11}>
-                                                        <Form.Item colon={false} {...restField} name={[name, 'value']}
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: 'Please fill criteria value',
-                                                                },
-                                                            ]}
-                                                        >
-                                                            <Input placeholder="Value" />
-                                                        </Form.Item>
-                                                    </Col>
-                                                    <Col span={2}>
-                                                        <MinusCircleOutlined onClick={() => remove(name)} />
-                                                    </Col>
-                                                </Row>
-                                            </div>
-                                        ))}
-                                        <Form.Item colon={false}>
-                                            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                                                Add a criteria
-                                            </Button>
-                                        </Form.Item>
-                                    </>
-                                )}
-                            </Form.List>
+                        <Col span={12}>
+                            <Form.Item
+                                name="gender" label="Gender"
+                                rules={[{ required: true, message: "Please fill patient's gender" }]}
+                            >
+                                <Select 
+                                    options={[
+                                        {value: "male", label: "Male"},
+                                        {value: "female", label: "Female"}
+                                    ]}
+                                    placeholder="Choose a gender"
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item name="age" label="Age">
+                                <Input type='number' placeholder='Fill an age'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item name="weight" label="Weight">
+                                <Input placeholder='Fill a weight'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="platelets" label="Platelets">
+                                <Input placeholder='Fill platelets'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="spo2" label="SpO2">
+                                <Input placeholder='Fill SpO2'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="creatinine" label="Creatinine">
+                                <Input placeholder='Fill creatinine'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="hematocrit" label="Hematocrit">
+                                <Input placeholder='Fill hematocrit'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="aids" label="AIDS">
+                                <Select 
+                                    options={[
+                                        {value: true, label: "True"},
+                                        {value: false, label: "False"}
+                                    ]}
+                                    placeholder="Choose a boolean value"
+                                    allowClear
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="limphoma" label="Lymphoma">
+                                <Select 
+                                    options={[
+                                        {value: true, label: "True"},
+                                        {value: false, label: "False"}
+                                    ]}
+                                    placeholder="Choose a boolean value"
+                                    allowClear
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="solid_tumor_with_metastasis" label="Solid Tumor with Metastasis">
+                                <Select 
+                                    options={[
+                                        {value: true, label: "True"},
+                                        {value: false, label: "False"}
+                                    ]}
+                                    placeholder="Choose a boolean value"
+                                    allowClear
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="heartrate" label="Heart Rate">
+                                <Input placeholder='Fill heart rate'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="calcium" label="Calcium">
+                                <Input placeholder='Fill calcium'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="wbc" label="WBC">
+                                <Input placeholder='Fill WBC'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="glucose" label="Glucose">
+                                <Input placeholder='Fill glucose'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="inr" label="INR">
+                                <Input placeholder='Fill INR'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="potassium" label="Potassium">
+                                <Input placeholder='Fill potassium'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="sodium" label="Sodium">
+                                <Input placeholder='Fill sodium'/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item name="ethicity" label="Ethicity">
+                                <Select 
+                                    options={[
+                                        {value: 1, label: "White"},
+                                        {value: 2, label: "Black"},
+                                        {value: 3, label: "Asian"},
+                                        {value: 4, label: "Latino"},
+                                        {value: 5, label: "Others"}
+                                    ]}
+                                    placeholder="Choose a boolean value"
+                                    allowClear
+                                />
+                            </Form.Item>
                         </Col>
                     </Row>
                 </Form>

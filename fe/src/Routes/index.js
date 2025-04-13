@@ -7,6 +7,8 @@ import ProtectedRoute from './protectedRoutes';
 import SignIn from "../Pages/SignIn";
 import Home from '../Pages/Home';
 import Patient from '../Pages/Patient';
+import EditPatient from '../Pages/Patient/ChildPages/Edit';
+import AlertHistory from '../Pages/Alert';
 
 const router = createBrowserRouter([
     {
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
     {
         path: '/patients',
         element: <ProtectedRoute component={<Patient />}/>
+    },
+    {
+        path: '/patients/:id',
+        element: <ProtectedRoute component={<EditPatient />}/>
+    },
+    {
+        path: '/alerts',
+        element: <ProtectedRoute component={<AlertHistory />}/>
     }
 ]);
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Descriptions, Modal } from 'antd';
 import PatientAPI from '../../API/Services/Patient';
+import criteria_metadata from '../../Utils/criteria_metadata';
 
 const ViewPatientModal = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -40,11 +41,32 @@ const ViewPatientModal = (props) => {
         loading={loading}
         open={open}
         onCancel={() => setOpen(false)}
+        width={1000}
       >
-        <p>Patient ID: {patient.id}</p>
-        <p>Name: {patient.name}</p>
-        <p>Admission Date: {patient.admission_date}</p>
-        <p> TODO: Display criteria </p>
+        <Descriptions>
+          <Descriptions.Item label="ID">{patient.id}</Descriptions.Item>
+          <Descriptions.Item label="Name">{patient.name}</Descriptions.Item>
+          <Descriptions.Item label="Admission Date">{patient.admission_date}</Descriptions.Item>
+          {
+            criteria_metadata.map((criteria) => {
+              return (
+                <Descriptions.Item key={criteria.name} label={criteria.label}>
+                  {
+                    (() => {
+                      if (criteria.type === "boolean") {
+                        return patient[criteria.name] ? "True" : "False";
+                      } else if (criteria.type === "enum") {
+                        return criteria.values[patient[criteria.name]];
+                      } else {
+                        return patient[criteria.name];
+                      }
+                    })()
+                  }
+                </Descriptions.Item>
+              );
+            })
+          }
+        </Descriptions>
       </Modal>
     </>
   );

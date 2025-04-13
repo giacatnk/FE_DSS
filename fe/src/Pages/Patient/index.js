@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Table, Row, Col, message, Button, Space, Breadcrumb } from 'antd';
 import Header from '../../Layouts/Header';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PatientAPI from '../../API/Services/Patient';
 import AddPatientDrawer from './AddPatientDrawer';
 import ViewPatientModal from './ViewPatientModal';
@@ -17,6 +17,7 @@ const Patient = (props) => {
     const [patients, setpatients] = useState([]);
     const [getpatientDone, setGetpatientDone] = useState(false);
     const [triggerGetpatient] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         PatientAPI.get()
@@ -55,7 +56,11 @@ const Patient = (props) => {
             render: (_, record) => {
                 return <Space size="middle">
                     <ViewPatientModal patient_id={record.id} />
-                    <Button >Edit</Button>
+                    <Button
+                        onClick={() => {navigate(`/patients/${record.id}`)}}
+                    > 
+                        Edit
+                    </Button>
                     <Button type='primary' danger>Delete</Button>
                 </Space>
             }
