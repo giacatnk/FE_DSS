@@ -7,7 +7,7 @@ const AlertAPI = {
             data: { alerts: alerts },
         })
     },
-    mark_as_false: (id) => {
+    mark_as_false_positive: (id) => {
         return Promise.resolve({
             data: { message: "Marked as false successfully" },
         })

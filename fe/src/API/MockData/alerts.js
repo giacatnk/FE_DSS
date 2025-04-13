@@ -26,7 +26,7 @@ const alerts = [
         "prediction": true,
         "confidence": 0.6526067711317989,
         "model_version": "20221231_094500",
-        "is_correct": null,
+        "is_correct": false,
         "created_at": "2025-04-13T05:22:08.035587Z"
     },
 
