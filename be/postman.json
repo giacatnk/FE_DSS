@@ -1,0 +1,177 @@
+{
+    "info": {
+        "name": "Diabetes Prediction API",
+        "description": "API endpoints for diabetes prediction system",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Patients",
+            "item": [
+                {
+                    "name": "Create Patient",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"John Doe\",\n    \"admission_date\": \"2025-04-13T06:06:45+00:00\",\n    \"age\": 45.0,\n    \"weight\": 75.0,\n    \"gender\": \"M\",\n    \"platelets\": 250000.0,\n    \"spo2\": 98.0,\n    \"creatinine\": 0.9,\n    \"hematocrit\": 45.0,\n    \"aids\": 0,\n    \"lymphoma\": 0,\n    \"solid_tumor_with_metastasis\": 0,\n    \"heartrate\": 75.0,\n    \"calcium\": 2.5,\n    \"wbc\": 7.0,\n    \"glucose\": 100.0,\n    \"inr\": 1.1,\n    \"potassium\": 4.0,\n    \"sodium\": 140.0,\n    \"ethnicity\": 1\n}"
+                        },
+                        "url": "{{baseUrl}}/patients/"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "List Patients",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/patients/?page=1&offset=10"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Patient",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/patients/{{patientId}}/"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Patient (Partial)",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"age\": 46.0,\n    \"weight\": 76.0\n}"
+                        },
+                        "url": "{{baseUrl}}/patients/{{patientId}}/"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Patient (Standard)",
+                    "request": {
+                        "method": "DELETE",
+                        "url": "{{baseUrl}}/patients/{{patientId}}/"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Patient by ID",
+                    "request": {
+                        "method": "DELETE",
+                        "url": "{{baseUrl}}/patients/delete_patient/?id={{patientId}}"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Alerts",
+            "item": [
+                {
+                    "name": "List Alerts",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/alerts/"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Alert",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/alerts/{{alertId}}/"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Label Alert",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"is_correct\": true\n}"
+                        },
+                        "url": "{{baseUrl}}/alerts/{{alertId}}/label/"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Model Operations",
+            "item": [
+                {
+                    "name": "Batch Prediction",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"patient_ids\": [1, 2, 3]\n}"
+                        },
+                        "url": "{{baseUrl}}/models/predict/"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Retrain Model",
+                    "request": {
+                        "method": "POST",
+                        "url": "{{baseUrl}}/models/retrain/"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Model Status",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/models/status/"
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8000/api",
+            "type": "string"
+        },
+        {
+            "key": "patientId",
+            "value": "1",
+            "type": "string"
+        },
+        {
+            "key": "alertId",
+            "value": "1",
+            "type": "string"
+        }
+    ]
+}

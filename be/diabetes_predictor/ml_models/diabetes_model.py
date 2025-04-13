@@ -1,7 +1,15 @@
-import requests
+import os
+import logging
 import json
+import random
 from datetime import datetime
 from ..models import Patient, Alert
+from typing import List, Dict, Any
+
+logger = logging.getLogger(__name__)
+
+# Get ML service URL from environment variable or use default
+ML_SERVICE_URL = os.getenv('ML_SERVICE_URL', 'http://localhost:8080')
 
 def get_features_from_patient(patient):
     """Extract features from a patient object"""
@@ -64,42 +72,79 @@ def retrain():
             'labels': labels
         }
         
-        response = requests.post('http://localhost:8080/retrain', json=training_data)
+        response = requests.post(
+            f'{ML_SERVICE_URL}/retrain',
+            json=training_data,
+            timeout=10  # Add timeout
+        )
         response.raise_for_status()
         
         return response.json()
-    except Exception as e:
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error connecting to ML service: {str(e)}")
         return {
             'status': 'error',
-            'message': str(e)
+            'message': f'Failed to connect to ML service: {str(e)}'
+        }
+    except Exception as e:
+        logger.error(f"Unexpected error in retrain: {str(e)}")
+        return {
+            'status': 'error',
+            'message': f'Unexpected error: {str(e)}'
         }
 
-def predict_batch(patient_ids):
-    """Make predictions for multiple patients using the ML service"""
+def predict_batch(patient_ids: List[int]) -> Dict[str, Any]:
+    """Predict diabetes risk for a batch of patients
+    
+    Args:
+        patient_ids: List of patient IDs to predict
+        
+    Returns:
+        Dict with predictions and model status
+    """
     try:
-        # Get features for all patients
+        # Get patient features
         patients = Patient.objects.filter(id__in=patient_ids)
         features_list = []
         
         for patient in patients:
             features_list.append(get_features_from_patient(patient))
         
+        if not features_list:
+            return {'error': 'No patient features found'}
+            
         # Send batch prediction request to ML service
         response = requests.post(
-            'http://localhost:8080/predict',
-            json={'patients': features_list}
+            f'{ML_SERVICE_URL}/predict',
+            json={'patients': features_list},
+            timeout=10  # Add timeout
         )
         response.raise_for_status()
         
         return response.json()
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error connecting to ML service: {str(e)}")
+        return {'error': f'Failed to connect to ML service: {str(e)}'}
     except Exception as e:
-        return {'error': str(e)}
+        logger.error(f"Unexpected error in predict_batch: {str(e)}")
+        return {'error': f'Unexpected error: {str(e)}'}
 
-def get_model_status():
-    """Get current model status from ML service"""
+def get_model_status() -> Dict[str, Any]:
+    """Get current model status from ML service
+    
+    Returns:
+        Dict with model status information
+    """
     try:
-        response = requests.get('http://localhost:8080/status')
+        response = requests.get(
+            f'{ML_SERVICE_URL}/status',
+            timeout=5  # Add timeout
+        )
         response.raise_for_status()
         return response.json()
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error getting model status: {str(e)}")
+        return {'error': f'Failed to get model status: {str(e)}', 'status': 'unavailable'}
     except Exception as e:
-        return {'error': str(e)}
+        logger.error(f"Unexpected error in get_model_status: {str(e)}")
+        return {'error': f'Unexpected error: {str(e)}', 'status': 'error'}
