@@ -2,30 +2,30 @@ version: '3.8'
 
 services:
   # Frontend dependency stage
-  fe-deps:
-    build:
-      context: ./fe
-      dockerfile: Dockerfile
-      target: deps
-    image: aceso-fe-deps:latest
+  # fe-deps:
+  #   build:
+  #     context: ./fe
+  #     dockerfile: Dockerfile
+  #     target: deps
+  #   image: aceso-fe-deps:latest
 
-  frontend:
-    build:
-      context: ./fe
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./fe/src:/app/src
-      - ./fe/public:/app/public
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-    depends_on:
-      - fe-deps
-      - backend
-    networks:
-      - app-network
+  # frontend:
+  #   build:
+  #     context: ./fe
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./fe/src:/app/src
+  #     - ./fe/public:/app/public
+  #     - /app/node_modules
+  #   environment:
+  #     - NODE_ENV=development
+  #   depends_on:
+  #     - fe-deps
+  #     - backend
+  #   networks:
+  #     - app-network
 
   # Backend dependency stage - this will be cached
   be-deps:
