@@ -52,7 +52,7 @@ const PatientAPI = {
             });
     },
     sync: () => {
-        return instance.post('/patients/sync/')
+        return instance.get('/patients/sync/')
             .then((response) => {
                 return response.data;
             })
