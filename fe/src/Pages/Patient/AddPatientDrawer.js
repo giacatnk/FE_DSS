@@ -22,7 +22,9 @@ const AddPatientDrawer = (props) => {
 
         console.log("Form submitted");
         const fields = form.getFieldsValue();
-        let data = {}
+        let data = {
+            "admission_date": new Date().toISOString().slice(0, 10),
+        }
         for (const key in fields) {
             if (key === "date_of_birth") {
                 data[key] = fields[key].format("YYYY-MM-DD");
@@ -182,7 +184,7 @@ const AddPatientDrawer = (props) => {
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item name="limphoma" label="Lymphoma">
+                            <Form.Item name="lymphoma" label="Lymphoma">
                                 <Select 
                                     options={[
                                         {value: 1, label: "True"},
@@ -241,7 +243,7 @@ const AddPatientDrawer = (props) => {
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item name="ethicity" label="Ethicity">
+                            <Form.Item name="ethnicity" label="Ethnicity">
                                 <Select 
                                     options={[
                                         {value: 1, label: "White"},

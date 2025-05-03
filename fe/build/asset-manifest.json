@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.bdfcdd55.css",
+    "main.js": "/static/js/main.672486d8.js",
+    "static/media/signin_screen.svg": "/static/media/signin_screen.7d2cc6f01af44e3af90a8dea32967539.svg",
+    "static/media/logo-constract.svg": "/static/media/logo-constract.fb67072880a4c22ddecb49e042058881.svg",
+    "static/media/logo.svg": "/static/media/logo.967300f12c88540470e3894d174618be.svg",
+    "index.html": "/index.html",
+    "main.bdfcdd55.css.map": "/static/css/main.bdfcdd55.css.map",
+    "main.672486d8.js.map": "/static/js/main.672486d8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bdfcdd55.css",
+    "static/js/main.672486d8.js"
+  ]
+}
